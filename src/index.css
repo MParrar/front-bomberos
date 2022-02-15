@@ -1,13 +1,51 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+.content {
+  padding-top: 0.8em;
+  max-width: 1024px;
+  margin: 0 auto;
+  padding-bottom: 0px;
+  font-family: "Roboto", sans-serif;
+  font-size: 0.8em;
+}
+
+.cuerpo {
+  padding: 0 15px;
+}
+
+/* CLASE PARA LA GRILLA DE LAS  CARDS*/
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 10px;
+  grid-template-rows: repeat(5, auto);
+  grid-auto-flow: dense; /* COLOCA ABAJO LAS CARDS CUANDO LA PANTALLA ES PEQUEÑA */
+}
+
+.card-cuerpo {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.foot_card {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-content: center;
+  background-color: #00b886;
+  padding-top: 0.4em;
+  padding-bottom: 0.4em;
+  padding-left: 0.5em;
 }

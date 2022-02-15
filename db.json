@@ -1,0 +1,81 @@
+{
+  "usuarios": [
+    {
+      "nombres": "Fabian Matias",
+      "apellidos": "Cardenas Parra",
+      "rut": "12345667",
+      "cargo": "COMANDANTE",
+      "codigo": "123",
+      "password": "231",
+      "rol": "Administrador",
+      "activo":true,
+      "id": 1,
+      "servicio":true
+    },
+    {
+      "nombres": "Nicolas Franco",
+      "apellidos": "Cardenas Parra",
+      "rut": "12345667",
+      "cargo": "VICESUPERINTENDENTE",
+      "codigo": "asd",
+      "password": "asd",
+      "rol": "Administrador",
+      "activo":true,
+      "id": 2,
+      "servicio":false
+
+    },
+    {
+      "nombres": "Luis Milton",
+      "apellidos": "Cardenas Parra",
+      "rut": "12345667",
+      "cargo": "COMANDANTE",
+      "codigo": "123",
+      "password": "12312",
+      "rol": "",
+      "activo":false,
+      "id": 3,
+      "servicio":true
+
+    },
+    {
+      "nombres": "Lisbet Jaqueline",
+      "apellidos": "Cardenas Parra",
+      "rut": "12345667",
+      "cargo": "COMANDANTE",
+      "codigo": "123",
+      "password": "12312",
+      "rol": "",
+      "activo":true,
+      "id": 4,
+      "servicio":true
+
+    },
+    {
+      "nombres": "Asus xd",
+      "apellidos": "Cardenas Parra",
+      "rut": "12345667",
+      "cargo": "COMANDANTE",
+      "codigo": "123",
+      "password": "12312",
+      "rol": "",
+      "activo":true,
+      "id": 5,
+      "servicio":true
+
+    },
+    {
+      "nombres": "HP ssds",
+      "apellidos": "Cardenas Parra",
+      "rut": "12345667",
+      "cargo": "COMANDANTE",
+      "codigo": "123",
+      "password": "12312",
+      "rol": "",
+      "activo":true,
+      "id": 6,
+      "servicio":true
+
+    }
+  ]
+}
