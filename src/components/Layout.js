@@ -4,6 +4,7 @@ import { Outlet } from 'react-router-dom'
 import styled from 'styled-components'
 import { Footer } from './Footer'
 import { Header } from './Header'
+import { Navbar } from './Navbar'
 import { Sidebar } from './Sidebar'
 
 const Contenedor = styled.div`
@@ -13,12 +14,13 @@ const Contenedor = styled.div`
 export const Layout = () => {
     return (
         <>
-            <Header />
-            <Sidebar />
-            <Contenedor>
+            {/* <Header />
+            <Sidebar /> */}
+            <Navbar />
+            <>
                 <Outlet />
 
-            </Contenedor>
+            </>
 
             {/* <Footer /> */}
         </>

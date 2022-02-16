@@ -11,7 +11,6 @@ export const Formulario = ({ show, setShow, setUsuarios, usuarios, setUsuario, u
     const { nombres, apellidos, rut, cargo, codigo, password, rol, confirmPassword, id, activo } = usuario;
 
     const handleChange = ({ target: { name, value, type, checked } }) => {
-        console.log(type)
         if (type === 'checkbox') {
             if (checked === true) {
                 setUsuario({
@@ -33,7 +32,6 @@ export const Formulario = ({ show, setShow, setUsuarios, usuarios, setUsuario, u
     };
 
     const handleChangeSwitch = ({ target: { name, value, type, checked } }) => {
-        console.log(type)
     }
     const handleSubmit = async e => {
         e.preventDefault();
@@ -83,7 +81,6 @@ export const Formulario = ({ show, setShow, setUsuarios, usuarios, setUsuario, u
                             </Form.Group>
                         </Col>
                     </Row>
-
                     <Row>
                         <Col sm={12} md={6} xl={6}>
                             <Form.Group className="mb-3" >
@@ -117,10 +114,8 @@ export const Formulario = ({ show, setShow, setUsuarios, usuarios, setUsuario, u
                                     <option value="AYUDANTE DE CIA">AYUDANTE DE CIA</option>
                                     <option value="SECRETARIA ">SECRETARIA </option>
                                     <option value="TESORERO">TESORERO</option>
-
                                 </Form.Select>
                             </Form.Group>
-
                         </Col>
                     </Row>
 
@@ -195,7 +190,6 @@ export const Formulario = ({ show, setShow, setUsuarios, usuarios, setUsuario, u
                                 // checked={activo}
                                 onChange={handleChangeSwitch}
                             />
-
                         </Col>
 
                     </Row>
@@ -208,7 +202,7 @@ export const Formulario = ({ show, setShow, setUsuarios, usuarios, setUsuario, u
                 }}>
                     Cerrar
                 </Button>
-                <Button variant="primary" onClick={(e) => handleSubmit(e)}>
+                <Button variant="success" onClick={(e) => handleSubmit(e)}>
                     Guardar
                 </Button>
             </Modal.Footer>

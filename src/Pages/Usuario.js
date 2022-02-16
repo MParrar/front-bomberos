@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import Button from 'react-bootstrap/Button'
 import { CambiarPassword } from '../components/Usuario/CambiarPassword'
 import { Formulario } from '../components/Usuario/Formulario'
@@ -42,7 +44,10 @@ export const Usuario = () => {
                     className='mb-4'
                     onClick={() => setShow(!show)}
                 >
-                    Agregar Usuario
+                    Agregar Usuario  {' '}
+
+                    <FontAwesomeIcon className='ml-2' icon={faUserPlus} />
+
                 </Button>
                 <Formulario
                     setShow={setShow}

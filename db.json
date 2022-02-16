@@ -1,21 +1,21 @@
 {
   "usuarios": [
     {
-      "nombres": "Fabian Matias",
+      "nombres": "Fabian Matias 1",
       "apellidos": "Cardenas Parra",
-      "rut": "12345667",
+      "rut": "1234556",
       "cargo": "COMANDANTE",
       "codigo": "123",
       "password": "231",
       "rol": "Administrador",
       "activo":true,
       "id": 1,
-      "servicio":true
+      "servicio":false
     },
     {
       "nombres": "Nicolas Franco",
       "apellidos": "Cardenas Parra",
-      "rut": "12345667",
+      "rut": "234234",
       "cargo": "VICESUPERINTENDENTE",
       "codigo": "asd",
       "password": "asd",
@@ -28,7 +28,7 @@
     {
       "nombres": "Luis Milton",
       "apellidos": "Cardenas Parra",
-      "rut": "12345667",
+      "rut": "333333",
       "cargo": "COMANDANTE",
       "codigo": "123",
       "password": "12312",
@@ -41,7 +41,7 @@
     {
       "nombres": "Lisbet Jaqueline",
       "apellidos": "Cardenas Parra",
-      "rut": "12345667",
+      "rut": "4444444",
       "cargo": "COMANDANTE",
       "codigo": "123",
       "password": "12312",
@@ -54,7 +54,7 @@
     {
       "nombres": "Asus xd",
       "apellidos": "Cardenas Parra",
-      "rut": "12345667",
+      "rut": "555555",
       "cargo": "COMANDANTE",
       "codigo": "123",
       "password": "12312",
@@ -67,7 +67,7 @@
     {
       "nombres": "HP ssds",
       "apellidos": "Cardenas Parra",
-      "rut": "12345667",
+      "rut": "66666",
       "cargo": "COMANDANTE",
       "codigo": "123",
       "password": "12312",
@@ -77,5 +77,6 @@
       "servicio":true
 
     }
+    
   ]
 }
