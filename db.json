@@ -8,9 +8,9 @@
       "codigo": "123",
       "password": "231",
       "rol": "Administrador",
-      "activo":true,
+      "activo": true,
       "id": 1,
-      "servicio":false
+      "servicio": false
     },
     {
       "nombres": "Nicolas Franco",
@@ -20,10 +20,9 @@
       "codigo": "asd",
       "password": "asd",
       "rol": "Administrador",
-      "activo":true,
+      "activo": true,
       "id": 2,
-      "servicio":false
-
+      "servicio": false
     },
     {
       "nombres": "Luis Milton",
@@ -33,10 +32,9 @@
       "codigo": "123",
       "password": "12312",
       "rol": "",
-      "activo":false,
+      "activo": false,
       "id": 3,
-      "servicio":true
-
+      "servicio": true
     },
     {
       "nombres": "Lisbet Jaqueline",
@@ -46,10 +44,9 @@
       "codigo": "123",
       "password": "12312",
       "rol": "",
-      "activo":true,
+      "activo": true,
       "id": 4,
-      "servicio":true
-
+      "servicio": true
     },
     {
       "nombres": "Asus xd",
@@ -59,10 +56,9 @@
       "codigo": "123",
       "password": "12312",
       "rol": "",
-      "activo":true,
+      "activo": true,
       "id": 5,
-      "servicio":true
-
+      "servicio": true
     },
     {
       "nombres": "HP ssds",
@@ -72,11 +68,20 @@
       "codigo": "123",
       "password": "12312",
       "rol": "",
-      "activo":true,
+      "activo": true,
       "id": 6,
-      "servicio":true
-
+      "servicio": true
+    },
+    {
+      "nombres": "",
+      "apellidos": "",
+      "rut": "",
+      "cargo": "",
+      "codigo": "",
+      "password": "",
+      "rol": "",
+      "confirmPassword": "",
+      "id": 7
     }
-    
   ]
 }

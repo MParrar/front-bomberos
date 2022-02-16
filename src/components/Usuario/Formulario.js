@@ -6,10 +6,44 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import clienteAxios from '../../config/axios';
 
-export const Formulario = ({ show, setShow, setUsuarios, usuarios, setUsuario, usuario, initialForm }) => {
+export const Formulario = ({ show, setShow, setUsuarios,
+    usuarios, setUsuario, usuario, initialForm,
+    errors, setErrors
+}) => {
 
-    const { nombres, apellidos, rut, cargo, codigo, password, rol, confirmPassword, id, activo } = usuario;
+    const { nombres, apellidos, rut, cargo, codigo, rol, activo, imagen, id } = usuario;
 
+    const validarFormulario = usuario => {
+        let errors = {};
+
+        if (!usuario.nombres.trim()) {
+            errors.nombres = 'El campo Nombres es requerido'
+        }
+        if (!usuario.apellidos.trim()) {
+            errors.apellidos = 'El campo Apellidos es requerido'
+        }
+        if (!usuario.rut.trim()) {
+            errors.rut = 'El campo Rut es requerido'
+        }
+        if (!usuario.cargo.trim()) {
+            errors.cargo = 'El campo Cargo es requerido'
+        }
+        if (!usuario.codigo.trim()) {
+            errors.codigo = 'El campo Codigo es requerido'
+        }
+        if (!usuario.rol.trim()) {
+            errors.rol = 'El campo Rol es requerido'
+        }
+        if (!usuario.imagen.trim()) {
+            errors.nombimagenes = 'El campo Imagen es requerido'
+        }
+        return errors;
+    }
+
+    const handleBlur = (e) => {
+        handleChange(e);
+        setErrors(validarFormulario(usuario))
+    }
     const handleChange = ({ target: { name, value, type, checked } }) => {
         if (type === 'checkbox') {
             if (checked === true) {
@@ -24,6 +58,7 @@ export const Formulario = ({ show, setShow, setUsuarios, usuarios, setUsuario, u
                 });
             }
         } else {
+            console.log(value)
             setUsuario({
                 ...usuario,
                 [name]: value,
@@ -34,8 +69,13 @@ export const Formulario = ({ show, setShow, setUsuarios, usuarios, setUsuario, u
     const handleChangeSwitch = ({ target: { name, value, type, checked } }) => {
     }
     const handleSubmit = async e => {
+        console.log('Form')
         e.preventDefault();
         // ValdiarsH!
+        if ([nombres, apellidos, rut, cargo, codigo, rol, imagen].includes('')) {
+            alert('LLENE TODO')
+            return;
+        }
 
         const respuesta = (await clienteAxios.post('/usuarios', usuario)).data;
         setUsuarios([...usuarios, respuesta]);
@@ -65,6 +105,8 @@ export const Formulario = ({ show, setShow, setUsuarios, usuarios, setUsuario, u
                                     value={nombres}
                                     name='nombres'
                                     onChange={handleChange}
+                                    onBlur={(e) => handleBlur(e)}
+
                                 />
                             </Form.Group>
                         </Col>
@@ -118,33 +160,6 @@ export const Formulario = ({ show, setShow, setUsuarios, usuarios, setUsuario, u
                             </Form.Group>
                         </Col>
                     </Row>
-
-                    {!id && <Row>
-                        <Col sm={12} md={6} xl={6}>
-                            <Form.Group className="mb-3" >
-                                <Form.Label>Contraseña</Form.Label>
-                                <Form.Control
-                                    type="password"
-                                    placeholder="Ingrese Contraseña"
-                                    value={password}
-                                    name='password'
-                                    onChange={handleChange}
-                                />
-                            </Form.Group>
-                        </Col>
-                        <Col sm={12} md={6} xl={6}>
-                            <Form.Group className="mb-3" >
-                                <Form.Label>Repetir Contraseña</Form.Label>
-                                <Form.Control
-                                    type="confirmPassword"
-                                    placeholder="Confirme Contraseña"
-                                    value={confirmPassword}
-                                    name='confirmPassword'
-                                    onChange={handleChange}
-                                />
-                            </Form.Group>
-                        </Col>
-                    </Row>}
                     <Row>
                         <Col sm={12} md={6} xl={6}>
                             <Form.Group className="mb-3" >
@@ -161,8 +176,19 @@ export const Formulario = ({ show, setShow, setUsuarios, usuarios, setUsuario, u
                         <Col sm={12} md={6} xl={6}>
                             <Form.Group className="mb-3">
                                 <div className="mb-3">
-                                    <label htmlFor="formFile" className="form-label">Seleccione Imagen</label>
-                                    <input className="form-control" type="file" id="formFile" />
+                                    <label
+                                        htmlFor="formFile"
+                                        className="form-label">
+                                        Seleccione Imagen
+                                    </label>
+                                    <input
+                                        className="form-control"
+                                        type="file"
+                                        id="formFile"
+                                        name='imagen'
+                                        value={imagen}
+                                        onChange={handleChange}
+                                    />
                                 </div>
                             </Form.Group>
                         </Col>
@@ -181,7 +207,7 @@ export const Formulario = ({ show, setShow, setUsuarios, usuarios, setUsuario, u
                                 />
                             </Form.Group>
                         </Col>
-                        <Col sm={12} md={6} xl={6}>
+                        {id && <Col sm={12} md={6} xl={6}>
                             <Form.Label>Activar/Desactivar</Form.Label>
                             <Form.Check
                                 type="switch"
@@ -190,7 +216,7 @@ export const Formulario = ({ show, setShow, setUsuarios, usuarios, setUsuario, u
                                 // checked={activo}
                                 onChange={handleChangeSwitch}
                             />
-                        </Col>
+                        </Col>}
 
                     </Row>
                 </Form>

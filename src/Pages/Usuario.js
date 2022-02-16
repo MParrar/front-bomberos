@@ -25,6 +25,7 @@ export const Usuario = () => {
     const [showCambiarPassword, setShowCambiarPassword] = useState(false);
     const [usuarios, setUsuarios] = useState([]);
     const [usuario, setUsuario] = useState(initialForm);
+    const [errors, setErrors] = useState({});
 
     useEffect(() => {
 
@@ -57,6 +58,8 @@ export const Usuario = () => {
                     setUsuario={setUsuario}
                     usuario={usuario}
                     initialForm={initialForm}
+                    setErrors={setErrors}
+                    errors={errors}
                 />
                 <Tabla
                     usuarios={usuarios}

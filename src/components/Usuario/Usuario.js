@@ -8,11 +8,11 @@ export const Usuario = ({ usuario, index, setUsuario, setShow, setShowCambiarPas
     const { nombres, apellidos, cargo } = usuario
     return (
         <tr>
-            <td>{index}</td>
+            <td>{index + 1}</td>
             <td>{nombres}</td>
             <td>{apellidos}</td>
             <td>{cargo}</td>
-            <td >
+            <td className='text-center'>
                 <Button
                     size='sm'
                     style={{ marginRight: '7px' }}

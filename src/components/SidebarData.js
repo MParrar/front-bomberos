@@ -6,7 +6,7 @@ import * as FcIcons from 'react-icons/fc';
 export const SidebarData = [
     {
         title: 'Inicio',
-        path: '/',
+        path: '/inicio',
         icon: <AiIcons.AiFillHome />,
         cName: 'nav-text'
     },
