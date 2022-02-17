@@ -15,9 +15,7 @@ export const InicioSesion = () => {
         rut: '',
         password: ''
     });
-
     const { rut, password } = usuario;
-
     useEffect(() => {
 
         if (autenticado) {
