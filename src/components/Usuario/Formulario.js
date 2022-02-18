@@ -1,237 +1,391 @@
-import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import clienteAxios from '../../config/axios';
+import {
+  NotificationContainer,
+  NotificationManager,
+} from 'react-notifications';
+import { crearUsuario, editarUsuario } from '../../services/Usuario';
 
-export const Formulario = ({ show, setShow, setUsuarios,
-    usuarios, setUsuario, usuario, initialForm,
-    errors, setErrors
+export const Formulario = ({
+  show,
+  setShow,
+  setUsuarios,
+  usuarios,
+  setUsuario,
+  usuario,
+  initialForm,
+  errors,
+  setErrors,
 }) => {
+  const {
+    nombres,
+    apellidos,
+    rut,
+    cargo,
+    codigo,
+    rol,
+    servicio,
+    activo,
+    imagen,
+    _id,
+  } = usuario;
 
-    const { nombres, apellidos, rut, cargo, codigo, rol, activo, imagen, id } = usuario;
+  const validarFormulario = (usuario) => {
+    let errors = {};
 
-    const validarFormulario = usuario => {
-        let errors = {};
+    if (!usuario.nombres.trim()) {
+      errors.nombres = 'El campo Nombres es requerido';
+    }
+    if (!usuario.apellidos.trim()) {
+      errors.apellidos = 'El campo Apellidos es requerido';
+    }
+    if (!usuario.rut.trim()) {
+      errors.rut = 'El campo Rut es requerido';
+    }
+    if (!usuario.cargo.trim()) {
+      errors.cargo = 'El campo Cargo es requerido';
+    }
+    if (!usuario.codigo.trim()) {
+      errors.codigo = 'El campo Codigo es requerido';
+    }
+    if (!usuario.imagen.trim()) {
+      errors.nombimagenes = 'El campo Imagen es requerido';
+    }
+    return errors;
+  };
 
-        if (!usuario.nombres.trim()) {
-            errors.nombres = 'El campo Nombres es requerido'
-        }
-        if (!usuario.apellidos.trim()) {
-            errors.apellidos = 'El campo Apellidos es requerido'
-        }
-        if (!usuario.rut.trim()) {
-            errors.rut = 'El campo Rut es requerido'
-        }
-        if (!usuario.cargo.trim()) {
-            errors.cargo = 'El campo Cargo es requerido'
-        }
-        if (!usuario.codigo.trim()) {
-            errors.codigo = 'El campo Codigo es requerido'
-        }
-        if (!usuario.rol.trim()) {
-            errors.rol = 'El campo Rol es requerido'
-        }
-        if (!usuario.imagen.trim()) {
-            errors.nombimagenes = 'El campo Imagen es requerido'
-        }
-        return errors;
+  const handleBlur = (e) => {
+    // handleChange(e);
+    setErrors(validarFormulario(usuario));
+  };
+
+  const handleChange = ({ target: { name, value, type, checked } }) => {
+    if (type === 'checkbox') {
+      if (checked === true) {
+        setUsuario({
+          ...usuario,
+          rol: 'Administrador',
+        });
+      } else {
+        setUsuario({
+          ...usuario,
+          rol: '',
+        });
+      }
+    } else {
+      setUsuario({
+        ...usuario,
+        [name]: value,
+      });
+    }
+  };
+
+  const handleChangeSwitch = ({ target: { name, value, type, checked } }) => {
+    if (servicio) {
+      NotificationManager.warning(
+        'No se puede dar de baja a un Usuario en servicio',
+        'Advertencia!',
+        2500
+      );
+      return;
+    }
+    setUsuario({ ...usuario, activo: checked });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    // ValdiarsH!
+    if (
+      [
+        nombres.trim(),
+        apellidos.trim(),
+        rut.trim(),
+        cargo.trim(),
+        codigo.trim(),
+        imagen.trim(),
+      ].includes('')
+    ) {
+      NotificationManager.warning(
+        'Debe completar todos los campos del formulario',
+        'Advertencia!',
+        2500
+      );
+      return;
     }
 
-    const handleBlur = (e) => {
-        handleChange(e);
-        setErrors(validarFormulario(usuario))
+    const respuesta = await crearUsuario(usuario);
+    setUsuarios([...usuarios, respuesta]);
+    NotificationManager.success(
+      'Usuario registrado correctamente',
+      'Registro Exitoso!',
+      2500
+    );
+    setUsuario(initialForm);
+    setShow(false);
+  };
+
+  const handleEdit = async () => {
+    if (
+      [
+        nombres.trim(),
+        apellidos.trim(),
+        rut.trim(),
+        cargo.trim(),
+        codigo.trim(),
+        imagen.trim(),
+      ].includes('')
+    ) {
+      NotificationManager.warning(
+        'Debe completar todos los campos del formulario',
+        'Advertencia!',
+        2500
+      );
+      return;
     }
-    const handleChange = ({ target: { name, value, type, checked } }) => {
-        if (type === 'checkbox') {
-            if (checked === true) {
-                setUsuario({
-                    ...usuario,
-                    rol: 'Administrador',
-                });
-            } else {
-                setUsuario({
-                    ...usuario,
-                    rol: '',
-                });
-            }
-        } else {
-            console.log(value)
-            setUsuario({
-                ...usuario,
-                [name]: value,
-            });
-        }
-    };
-
-    const handleChangeSwitch = ({ target: { name, value, type, checked } }) => {
+    const respuesta = await editarUsuario(usuario);
+    if (respuesta.ok === true) {
+      NotificationManager.success(`${respuesta.msg}`, 'Éxito!', 2500);
     }
-    const handleSubmit = async e => {
-        console.log('Form')
-        e.preventDefault();
-        // ValdiarsH!
-        if ([nombres, apellidos, rut, cargo, codigo, rol, imagen].includes('')) {
-            alert('LLENE TODO')
-            return;
-        }
+    const listaUsuarios = usuarios.map((bombero) =>
+      bombero._id === usuario._id ? usuario : bombero
+    );
+    setUsuarios(listaUsuarios);
+    setUsuario(initialForm);
+    setShow(false);
+  };
 
-        const respuesta = (await clienteAxios.post('/usuarios', usuario)).data;
-        setUsuarios([...usuarios, respuesta]);
-        setUsuario(initialForm);
-        setShow(false);
-    }
-    return (
-        <Modal show={show}
-            onHide={() => {
-                setShow(!show)
-                setUsuario(initialForm)
-            }}
-            size='xl'
-        >
-            <Modal.Header closeButton>
-                <Modal.Title>Registrar Usuario</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-                <Form>
-                    <Row>
-                        <Col sm={12} md={6} xl={6}>
-                            <Form.Group className="mb-3" >
-                                <Form.Label>Nombre</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    placeholder="Ingrese Nombre"
-                                    value={nombres}
-                                    name='nombres'
-                                    onChange={handleChange}
-                                    onBlur={(e) => handleBlur(e)}
+  const getBase64 = (file) => {
+    return new Promise((resolve) => {
+      let baseURL = '';
+      // Make new FileReader
+      let reader = new FileReader();
 
-                                />
-                            </Form.Group>
-                        </Col>
-                        <Col sm={12} md={6} xl={6}>
-                            <Form.Group className="mb-3" >
-                                <Form.Label>Apellidos</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    placeholder="Ingrese Apellidos"
-                                    value={apellidos}
-                                    name='apellidos'
-                                    onChange={handleChange}
-                                />
-                            </Form.Group>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col sm={12} md={6} xl={6}>
-                            <Form.Group className="mb-3" >
-                                <Form.Label>Rut</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    placeholder="Ingrese Rut"
-                                    value={rut}
-                                    name='rut'
-                                    onChange={handleChange}
-                                />
-                            </Form.Group>
-                        </Col>
-                        <Col sm={12} md={6} xl={6}>
-                            <Form.Group className="mb-3" >
-                                <Form.Label>Cargo</Form.Label>
-                                <Form.Select
-                                    aria-label="Default select example"
-                                    name='cargo'
-                                    value={cargo}
-                                    onChange={handleChange}
-                                >
-                                    <option>-- Seleccione Cargo- -</option>
-                                    <option value="COMANDANTE">COMANDANTE</option>
-                                    <option value="VICESUPERINTENDENTE">VICESUPERINTENDENTE</option>
-                                    <option value="TESORERA GENERAL">TESORERA GENERAL</option>
-                                    <option value="CAPITAN">CAPITAN</option>
-                                    <option value="DIRECTOR">DIRECTOR</option>
-                                    <option value="TENIENTE PRIMERO">TENIENTE PRIMERO</option>
-                                    <option value="TENIENTE SEGUNDO">TENIENTE SEGUNDOL</option>
-                                    <option value="AYUDANTE DE CIA">AYUDANTE DE CIA</option>
-                                    <option value="SECRETARIA ">SECRETARIA </option>
-                                    <option value="TESORERO">TESORERO</option>
-                                </Form.Select>
-                            </Form.Group>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col sm={12} md={6} xl={6}>
-                            <Form.Group className="mb-3" >
-                                <Form.Label>Codigo</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    placeholder="Ingrese Codigo"
-                                    value={codigo}
-                                    name='codigo'
-                                    onChange={handleChange}
-                                />
-                            </Form.Group>
-                        </Col>
-                        <Col sm={12} md={6} xl={6}>
-                            <Form.Group className="mb-3">
-                                <div className="mb-3">
-                                    <label
-                                        htmlFor="formFile"
-                                        className="form-label">
-                                        Seleccione Imagen
-                                    </label>
-                                    <input
-                                        className="form-control"
-                                        type="file"
-                                        id="formFile"
-                                        name='imagen'
-                                        value={imagen}
-                                        onChange={handleChange}
-                                    />
-                                </div>
-                            </Form.Group>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col sm={12} md={6} xl={6}>
-                            <Form.Group className="mb-3">
-                                <Form.Label>Rol</Form.Label>
-                                <Form.Check
-                                    type="checkbox"
-                                    label="Administrador"
-                                    value={rol}
-                                    checked={rol === '' ? false : true}
-                                    name='rol'
-                                    onChange={handleChange}
-                                />
-                            </Form.Group>
-                        </Col>
-                        {id && <Col sm={12} md={6} xl={6}>
-                            <Form.Label>Activar/Desactivar</Form.Label>
-                            <Form.Check
-                                type="switch"
-                                id="custom-switch"
-                                label={activo ? 'Desactivar' : 'Activar'}
-                                // checked={activo}
-                                onChange={handleChangeSwitch}
-                            />
-                        </Col>}
+      // Convert the file to base64 text
+      reader.readAsDataURL(file);
 
-                    </Row>
-                </Form>
-            </Modal.Body>
-            <Modal.Footer>
-                <Button variant="secondary" onClick={() => {
-                    setShow(!show)
-                    setUsuario(initialForm)
-                }}>
-                    Cerrar
+      // on reader load somthing...
+      reader.onload = () => {
+        // Make a fileInfo Object
+        baseURL = reader.result;
+        resolve(baseURL);
+      };
+    });
+  };
+
+  const handleFileInputChange = (e) => {
+    let file = e.target.files[0];
+
+    getBase64(file)
+      .then((result) => {
+        file['base64'] = result;
+        setUsuario({ ...usuario, imagen: result });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  return (
+    <>
+      <NotificationContainer />
+      <Modal
+        show={show}
+        onHide={() => {
+          setShow(!show);
+          setUsuario(initialForm);
+        }}
+        size="xl"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>
+            {_id ? 'Editar Usuario' : 'Registrar Usuario'}
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Row>
+              <Col sm={12} md={6} xl={6}>
+                <Form.Group className="mb-3">
+                  <Form.Label htmlFor="nombres">Nombre</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Ingrese Nombre"
+                    value={nombres}
+                    name="nombres"
+                    id="nombres"
+                    onChange={handleChange}
+                    onBlur={(e) => handleBlur(e)}
+                  />
+                </Form.Group>
+              </Col>
+              <Col sm={12} md={6} xl={6}>
+                <Form.Group className="mb-3">
+                  <Form.Label htmlFor="apellidos">Apellidos</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Ingrese Apellidos"
+                    value={apellidos}
+                    name="apellidos"
+                    id="apellidos"
+                    onChange={handleChange}
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row>
+              <Col sm={12} md={6} xl={6}>
+                <Form.Group className="mb-3">
+                  <Form.Label htmlFor="rut">Rut</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Ingrese Rut"
+                    value={rut}
+                    name="rut"
+                    id="rut"
+                    onChange={handleChange}
+                  />
+                </Form.Group>
+              </Col>
+              <Col sm={12} md={6} xl={6}>
+                <Form.Group className="mb-3">
+                  <Form.Label>Cargo</Form.Label>
+                  <Form.Select
+                    aria-label="Default select example"
+                    name="cargo"
+                    value={cargo}
+                    onChange={handleChange}
+                  >
+                    <option>-- Seleccione Cargo- -</option>
+                    <option value="COMANDANTE">COMANDANTE</option>
+                    <option value="VICESUPERINTENDENTE">
+                      VICESUPERINTENDENTE
+                    </option>
+                    <option value="TESORERA GENERAL">TESORERA GENERAL</option>
+                    <option value="CAPITAN">CAPITAN</option>
+                    <option value="DIRECTOR">DIRECTOR</option>
+                    <option value="TENIENTE PRIMERO">TENIENTE PRIMERO</option>
+                    <option value="TENIENTE SEGUNDO">TENIENTE SEGUNDOL</option>
+                    <option value="AYUDANTE DE CIA">AYUDANTE DE CIA</option>
+                    <option value="SECRETARIA ">SECRETARIA </option>
+                    <option value="TESORERO">TESORERO</option>
+                  </Form.Select>
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row>
+              <Col sm={12} md={6} xl={6}>
+                <Form.Group className="mb-3">
+                  <Form.Label htmlFor="codigo">Codigo</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Ingrese Codigo"
+                    value={codigo}
+                    name="codigo"
+                    id="codigo"
+                    onChange={handleChange}
+                  />
+                </Form.Group>
+              </Col>
+              <Col sm={12} md={6} xl={6}>
+                <Form.Group className="mb-3">
+                  <Form.Label htmlFor="rol">Rol</Form.Label>
+                  <Form.Check
+                    type="checkbox"
+                    label="Administrador"
+                    value={rol}
+                    checked={rol === '' || rol === 'Bombero' ? false : true}
+                    name="rol"
+                    id="rol"
+                    onChange={handleChange}
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+
+            <Row>
+              <Col sm={12} md={6} xl={6}>
+                {imagen && (
+                  <img
+                    src={imagen}
+                    width={200}
+                    height={200}
+                    className="mb-2"
+                    alt="Imagen Bombero"
+                  ></img>
+                )}
+                <Form.Group className="mb-3">
+                  <div className="mb-3">
+                    {!imagen && (
+                      <Form.Label htmlFor="formFile" className="form-label">
+                        Seleccione Imagen
+                      </Form.Label>
+                    )}
+                    <Form.Control
+                      className="form-control"
+                      type="file"
+                      id="formFile"
+                      name="imagen"
+                      // value={imagen}
+                      onChange={handleFileInputChange}
+                    />
+                  </div>
+                </Form.Group>
+              </Col>
+            </Row>
+          </Form>
+        </Modal.Body>
+        {_id ? (
+          <Modal.Footer style={{ display: 'inline' }}>
+            <Row>
+              <Col xs={6} sm={6} md={9} xl={10} xxl={10}>
+                <Form.Label>Activar/Desactivar</Form.Label>
+                <Form.Check
+                  type="switch"
+                  id="custom-switch"
+                  label={activo ? 'Desactivar' : 'Activar'}
+                  checked={activo}
+                  value={activo}
+                  onChange={handleChangeSwitch}
+                />
+              </Col>
+              <Col xs={6} sm={6} md={3} xl={2} xxl={2}>
+                <Button
+                  variant="secondary"
+                  onClick={() => {
+                    setShow(!show);
+                    setUsuario(initialForm);
+                  }}
+                >
+                  Cerrar
                 </Button>
-                <Button variant="success" onClick={(e) => handleSubmit(e)}>
-                    Guardar
+                {'  '}
+                <Button variant="success" onClick={(e) => handleEdit(e)}>
+                  Editar
                 </Button>
-            </Modal.Footer>
-        </Modal>
-    )
-}
+              </Col>
+            </Row>
+          </Modal.Footer>
+        ) : (
+          <Modal.Footer>
+            <Button
+              variant="secondary"
+              onClick={() => {
+                setShow(!show);
+                setUsuario(initialForm);
+              }}
+            >
+              Cerrar
+            </Button>
+            {'  '}
+            <Button variant="success" onClick={(e) => handleSubmit(e)}>
+              Guardar
+            </Button>
+          </Modal.Footer>
+        )}
+      </Modal>
+    </>
+  );
+};

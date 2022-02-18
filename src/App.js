@@ -1,5 +1,6 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'react-notifications/lib/notifications.css';
 import { Layout } from './components/Layout';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Usuario } from './Pages/Usuario';
@@ -20,18 +21,27 @@ function App() {
     <AuthState>
       <BrowserRouter>
         <Routes>
-          <Route path='/' element={<Login />} >
-          </Route>
-          <Route exact path="/inicio" element={
-            <RutaPrivada>
-              <Inicio />
-            </RutaPrivada>
-          } />
-          <Route exact path="/usuario" element={
-            <RutaPrivada>
-              <Usuario />
-            </RutaPrivada>
-          } />
+          <Route path="/" element={<Login />}></Route>
+          <Route
+            exact
+            path="/inicio"
+            element={
+              <RutaPrivada>
+                <Layout />
+                <Inicio />
+              </RutaPrivada>
+            }
+          />
+          <Route
+            exact
+            path="/usuario"
+            element={
+              <RutaPrivada>
+                <Layout />
+                <Usuario />
+              </RutaPrivada>
+            }
+          />
           {/* <Route path='/inicio' element={<Layout />} >
             <Route index element={<Inicio />} />
           </Route> */}

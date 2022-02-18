@@ -1,28 +1,27 @@
-import React from 'react'
-import { Container } from 'react-bootstrap'
-import { Outlet } from 'react-router-dom'
-import styled from 'styled-components'
-import { Footer } from './Footer'
-import { Header } from './Header'
-import { Navbar } from './Navbar'
-import { Sidebar } from './Sidebar'
+import React from 'react';
+import { Container } from 'react-bootstrap';
+import { Outlet } from 'react-router-dom';
+import styled from 'styled-components';
+import { Footer } from './Footer';
+import { Header } from './Header';
+import { Navbar } from './Navbar';
+import { Sidebar } from './Sidebar';
 
 const Contenedor = styled.div`
-    margin-left: 16%;
-`
+  margin-left: 16%;
+`;
 
 export const Layout = () => {
-    return (
-        <>
-            {/* <Header />
+  return (
+    <>
+      {/* <Header />
             <Sidebar /> */}
-            <Navbar />
-            <>
-                <Outlet />
+      <Navbar />
+      <>
+        <Outlet />
+      </>
 
-            </>
-
-            {/* <Footer /> */}
-        </>
-    )
-}
+      {/* <Footer /> */}
+    </>
+  );
+};

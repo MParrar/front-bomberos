@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 const clienteAxios = axios.create({
-    // baseURL: process.env.REACT_APP_BACKEND_URL
-    baseURL: 'http://localhost:3004/'
+  // baseURL: process.env.REACT_APP_BACKEND_URL
+  baseURL: 'https://api-bomberos-pinto.herokuapp.com/',
 });
 
 export default clienteAxios;

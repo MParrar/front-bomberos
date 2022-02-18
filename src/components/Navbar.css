@@ -12,6 +12,18 @@
   background: none;
 }
 
+.sesion-bars {
+  margin-right: 2rem;
+  font-size: 2rem;
+  background: none;
+}
+
+.title-bars {
+  color: white;
+  margin: 0 auto;
+  font-size: 2rem;
+}
+
 .nav-menu {
   background-color: #060b26;
   width: 250px;
