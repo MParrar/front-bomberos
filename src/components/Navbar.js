@@ -75,6 +75,24 @@ export const Navbar = () => {
                 </li>
               );
             })}
+            <DropdownButton
+              as={ButtonGroup}
+              variant="secondary"
+              className="sesion-side-bar"
+              title={
+                usuario
+                  ? `${usuario.usuario.nombres}  ${usuario.usuario.apellidos}`
+                  : ''
+              }
+              id="bg-nested-dropdown"
+            >
+              <Dropdown.Item
+                eventKey="1"
+                onClick={() => cerrarSesionComponent()}
+              >
+                Cerrar Sesión
+              </Dropdown.Item>
+            </DropdownButton>
           </ul>
         </nav>
       </IconContext.Provider>

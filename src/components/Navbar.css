@@ -12,12 +12,6 @@
   background: none;
 }
 
-.sesion-bars {
-  margin-right: 2rem;
-  font-size: 2rem;
-  background: none;
-}
-
 .title-bars {
   color: white;
   margin: 0 auto;
@@ -82,4 +76,32 @@
 
 span {
   margin-left: 16px;
+}
+
+@media (min-width: 767px) {
+  .sesion-side-bar {
+    margin-right: 2rem;
+    font-size: 2rem;
+    background: none;
+    display: none;
+  }
+  .sesion-bars {
+    margin-right: 2rem;
+    font-size: 2rem;
+    background: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .sesion-side-bar {
+    margin-right: 2rem;
+    font-size: 2rem;
+    background: none;
+  }
+  .sesion-bars {
+    margin-right: 2rem;
+    font-size: 2rem;
+    background: none;
+    display: none;
+  }
 }
