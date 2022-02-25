@@ -5,7 +5,7 @@ export const Bombero = ({ bombero, setBusqueda, setBombero }) => {
   const { nombres, apellidos, cargo, codigo, imagen } = bombero;
 
   return (
-    <Card className="mr-4 mt-4" >
+    <Card className="mr-4 mt-4 imgHover" >
       <Card.Img
         onClick={() => {
           setBusqueda(true);
@@ -15,7 +15,6 @@ export const Bombero = ({ bombero, setBusqueda, setBombero }) => {
           cursor: 'pointer',
 
         }}
-        className='imgHover'
         width={270}
         height={230}
         variant="top"

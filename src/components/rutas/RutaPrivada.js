@@ -13,13 +13,4 @@ const RutaPrivada = ({ children }) => {
   return !autenticado && !cargando ? <Navigate to="/" /> : children;
 };
 
-<<<<<<< HEAD
 export default RutaPrivada;
-=======
-
-    return (!autenticado && !cargando) ? <Navigate to="/" /> : children
-
-}
-
-export default RutaPrivada;
->>>>>>> mati

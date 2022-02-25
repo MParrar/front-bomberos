@@ -43,7 +43,6 @@ function App() {
               </RutaPrivada>
             }
           />
-<<<<<<< HEAD
           <Route
             exact
             path="/estadisticas"
@@ -54,10 +53,6 @@ function App() {
               </RutaPrivada>
             }
           />
-=======
-
-
->>>>>>> mati
           {/* <Route path='/inicio' element={<Layout />} >
             <Route index element={<Inicio />} />
           </Route> */}
