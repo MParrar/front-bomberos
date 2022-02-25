@@ -46,11 +46,7 @@ export const Navbar = () => {
             as={ButtonGroup}
             variant="secondary"
             className="sesion-bars"
-            title={
-              usuario
-                ? `${usuario.usuario.nombres}  ${usuario.usuario.apellidos}`
-                : ''
-            }
+            title={usuario ? `${usuario.usuario.nombres}` : ''}
             id="bg-nested-dropdown"
           >
             <Dropdown.Item eventKey="1" onClick={() => cerrarSesionComponent()}>

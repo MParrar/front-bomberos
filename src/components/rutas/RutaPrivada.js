@@ -3,17 +3,14 @@ import { Navigate } from 'react-router-dom';
 import AuthContext from '../../context/autenticacion/authContext';
 
 const RutaPrivada = ({ children }) => {
+  const authContext = useContext(AuthContext);
+  const { autenticado, usuarioAutenticado, cargando } = authContext;
 
-    const authContext = useContext(AuthContext);
-    const { autenticado, usuarioAutenticado, cargando } = authContext;
+  useEffect(() => {
+    usuarioAutenticado();
+  }, []);
 
-    useEffect(() => {
-        usuarioAutenticado()
-    }, []);
-
-
-    return (autenticado && !cargando) ? children : <Navigate to="/" />
-
-}
+  return !autenticado && !cargando ? <Navigate to="/" /> : children;
+};
 
 export default RutaPrivada;

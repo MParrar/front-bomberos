@@ -9,7 +9,7 @@ export const crearUsuario = async (usuario) => {
   }
 };
 
-export const obtenerUsuariosService = async () => {
+export const obtenerUsuarios = async () => {
   try {
     const { data } = await clienteAxios.get('/usuario');
     return data;
@@ -81,6 +81,15 @@ export const bomberoServicio = async (id, servicio) => {
 export const desactivarUsuario = async (id, activo) => {
   try {
     const { data } = await clienteAxios.put(`/usuario/alta-naja/${id}`);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const obtenerEstadisticas = async () => {
+  try {
+    const { data } = await clienteAxios.get('/usuario/logs');
+    return data;
   } catch (error) {
     console.log(error);
   }

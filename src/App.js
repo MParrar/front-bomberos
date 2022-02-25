@@ -9,6 +9,7 @@ import { Login } from './Pages/Login';
 import AuthState from './context/autenticacion/authState';
 import { tokenAuth } from './config/token';
 import RutaPrivada from './components/rutas/RutaPrivada';
+import Estadisticas from './Pages/Estadisticas';
 
 const token = localStorage.getItem('token');
 
@@ -39,6 +40,16 @@ function App() {
               <RutaPrivada>
                 <Layout />
                 <Usuario />
+              </RutaPrivada>
+            }
+          />
+          <Route
+            exact
+            path="/estadisticas"
+            element={
+              <RutaPrivada>
+                <Layout />
+                <Estadisticas />
               </RutaPrivada>
             }
           />

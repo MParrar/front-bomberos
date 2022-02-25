@@ -9,10 +9,7 @@ import {
   NotificationContainer,
   NotificationManager,
 } from 'react-notifications';
-import {
-  eliminarUsuarioService,
-  obtenerUsuariosService,
-} from '../services/Usuario';
+import { eliminarUsuarioService, obtenerUsuarios } from '../services/Usuario';
 import Confirmacion from '../components/Confirmacion';
 
 const initialForm = {
@@ -38,7 +35,7 @@ export const Usuario = () => {
 
   useEffect(() => {
     const listarUsuarios = async () => {
-      const respuesta = await obtenerUsuariosService();
+      const respuesta = await obtenerUsuarios();
       setUsuarios(respuesta);
     };
     listarUsuarios();

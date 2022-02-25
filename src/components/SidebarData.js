@@ -19,7 +19,7 @@ export const SidebarData = [
 
   {
     title: 'Estadísticas',
-    path: 'estadisticas',
+    path: '/estadisticas',
     icon: <FcIcons.FcStatistics />,
     cName: 'nav-text',
   },
