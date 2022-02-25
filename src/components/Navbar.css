@@ -10,12 +10,7 @@
   margin-left: 2rem;
   font-size: 2rem;
   background: none;
-}
-
-.title-bars {
-  color: white;
-  margin: 0 auto;
-  font-size: 3rem;
+  width: 10%;
 }
 
 .nav-menu {
@@ -28,7 +23,7 @@
   top: 0;
   left: -100%;
   transition: 850ms;
-  z-index: 999;
+  z-index: 9999;
 }
 
 .nav-menu.active {
@@ -89,6 +84,7 @@ span {
     margin-right: 2rem;
     font-size: 2rem;
     background: none;
+    width: 10%;
   }
 }
 
@@ -103,5 +99,25 @@ span {
     font-size: 2rem;
     background: none;
     display: none;
+  }
+}
+
+@media (min-width: 767px) {
+  .title-bars {
+    color: white;
+    margin: 0 auto;
+    font-size: 2rem;
+    font-family: "Lato", sans-serif;
+  }
+}
+
+@media (max-width: 768px) {
+  .title-bars {
+    display: none;
+    font-family: "Lato", sans-serif;
+  }
+  .img-title {
+    display: inline-block;
+    width: 100px;
   }
 }

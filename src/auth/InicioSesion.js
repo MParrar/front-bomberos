@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import AuthContext from '../context/autenticacion/authContext';
 import { Alerta } from '../components/Alerta';
+import { Spinner } from '../components/Spinner';
 
 export const InicioSesion = () => {
 
@@ -10,6 +11,7 @@ export const InicioSesion = () => {
     const [error, setError] = useState('');
     const authContext = useContext(AuthContext);
     const { autenticado, iniciarSesion, mensaje } = authContext;
+    const [loading, setLoading] = useState(false);
 
     const [usuario, guardarUsuario] = useState({
         rut: '',
@@ -44,54 +46,59 @@ export const InicioSesion = () => {
             return;
         }
 
+        setLoading(true);
         iniciarSesion({ rut, password });
+        setLoading(false);
     }
     return (
-        <div className="form-usuario">
+        loading ?
+            <Spinner />
+            :
+            <div className="form-usuario">
 
-            <div className="contenedor-form sombra-dark mb-4">
-                {error && (<Alerta > {error} </Alerta>)}
-                <h1>Iniciar Sesión</h1>
+                <div className="contenedor-form sombra-dark mb-4">
+                    {error && (<Alerta > {error} </Alerta>)}
+                    <h1>Iniciar Sesión</h1>
 
-                <form
-                    className='mt-4'
-                // onSubmit={onSubmit}
-                >
-                    <div className="campo-form">
-                        {/* <label htmlFor="email">Rut</label> */}
-                        <input
-                            type="text"
-                            id="rut"
-                            name="rut"
-                            placeholder="Ingrese Rut"
-                            value={rut}
-                            onChange={onChange}
-                        />
-                    </div>
+                    <form
+                        className='mt-4'
+                    // onSubmit={onSubmit}
+                    >
+                        <div className="campo-form">
+                            {/* <label htmlFor="email">Rut</label> */}
+                            <input
+                                type="text"
+                                id="rut"
+                                name="rut"
+                                placeholder="Ingrese Rut"
+                                value={rut}
+                                onChange={onChange}
+                            />
+                        </div>
 
-                    <div className="campo-form">
-                        {/* <label htmlFor="password">Password</label> */}
-                        <input
-                            type="password"
-                            id="password"
-                            name="password"
-                            placeholder="Ingrese Contraseña"
-                            value={password}
-                            onChange={onChange}
-                        />
-                    </div>
+                        <div className="campo-form">
+                            {/* <label htmlFor="password">Password</label> */}
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                placeholder="Ingrese Contraseña"
+                                value={password}
+                                onChange={onChange}
+                            />
+                        </div>
 
-                    <div className="campo-form">
-                        <Button
-                            style={{ margin: '0 auto' }}
-                            variant='secondary'
-                            onClick={onSubmit}
-                        >
-                            Iniciar Sesion
-                        </Button>
-                    </div>
-                </form>
+                        <div className="campo-form">
+                            <Button
+                                style={{ margin: '0 auto' }}
+                                variant='secondary'
+                                onClick={onSubmit}
+                            >
+                                Iniciar Sesion
+                            </Button>
+                        </div>
+                    </form>
+                </div>
             </div>
-        </div>
     )
 }

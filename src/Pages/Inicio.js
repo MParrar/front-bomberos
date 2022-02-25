@@ -5,7 +5,7 @@ import AuthContext from '../context/autenticacion/authContext'
 export const Inicio = () => {
 
     const authContext = useContext(AuthContext);
-    const { usuarioAutenticado } = authContext;
+    const { usuarioAutenticado, autenticado } = authContext;
 
     useEffect(() => {
         usuarioAutenticado();

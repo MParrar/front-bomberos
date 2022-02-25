@@ -11,8 +11,8 @@ export const Tabla = ({
   eliminarUsuario,
 }) => {
   return (
-    <Row>
-      <Col xs={12} sm={12} md={12} xl={12} xxl={12}>
+    <Row className='tablaUsuario' >
+      <Col xs={12} sm={12} md={12} xl={12} xxl={12} style={{ overflowX: 'auto' }}>
         <Table striped bordered hover>
           <thead>
             <tr>

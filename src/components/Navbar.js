@@ -4,10 +4,10 @@ import * as FaIcons from 'react-icons/fa';
 import * as AiIcons from 'react-icons/ai';
 import { SidebarData } from './SidebarData';
 import { IconContext } from 'react-icons';
-
+import logo from '../img/logo.png'
 import './Navbar.css';
 import AuthContext from '../context/autenticacion/authContext';
-import { ButtonGroup, Dropdown, DropdownButton } from 'react-bootstrap';
+import { Button, ButtonGroup, Dropdown, DropdownButton } from 'react-bootstrap';
 
 export const Navbar = () => {
   const [sidebar, setSidebar] = useState(false);
@@ -37,16 +37,20 @@ export const Navbar = () => {
   return (
     <>
       <IconContext.Provider value={{ color: '#fff' }}>
-        <div className="navbar mb-4">
+        <div className="navbar mb-4 ">
           <Link to="#" className="menu-bars">
             <FaIcons.FaBars onClick={showSidebar} />
           </Link>
-          <h4 className="title-bars">Primera Compañia de Bomberos de Pinto</h4>
+          <h4 className="title-bars">Primera Compañia Bomberos de Pinto</h4>
           <DropdownButton
             as={ButtonGroup}
             variant="secondary"
             className="sesion-bars"
-            title={usuario ? `${usuario.usuario.nombres}` : ''}
+            title={
+              usuario
+                ? `${usuario.usuario.nombres.split(' ')[0]}  ${usuario.usuario.apellidos.split(' ')[0]}`
+                : ''
+            }
             id="bg-nested-dropdown"
           >
             <Dropdown.Item eventKey="1" onClick={() => cerrarSesionComponent()}>
@@ -62,33 +66,18 @@ export const Navbar = () => {
               </Link>
             </li>
             {SidebarData.map((item, index) => {
-              return (
-                <li key={index} className={item.cName}>
-                  <Link to={item.path}>
-                    {item.icon}
-                    <span>{item.title}</span>
-                  </Link>
-                </li>
-              );
-            })}
-            <DropdownButton
-              as={ButtonGroup}
-              variant="secondary"
-              className="sesion-side-bar"
-              title={
-                usuario
-                  ? `${usuario.usuario.nombres}  ${usuario.usuario.apellidos}`
-                  : ''
+              if (item.rol === 'all' || item.rol === usuario?.usuario.rol || usuario?.usuario.rol === 'Cuartel') {
+                return (
+                  <li key={index} className={item.cName}>
+                    <Link to={item.path} onClick={item.path === '/' && (cerrarSesion)}>
+                      {item.icon}
+                      <span>{item.title}</span>
+                    </Link>
+                  </li>
+                )
               }
-              id="bg-nested-dropdown"
-            >
-              <Dropdown.Item
-                eventKey="1"
-                onClick={() => cerrarSesionComponent()}
-              >
-                Cerrar Sesión
-              </Dropdown.Item>
-            </DropdownButton>
+              ;
+            })}
           </ul>
         </nav>
       </IconContext.Provider>
