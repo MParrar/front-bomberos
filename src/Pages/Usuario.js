@@ -14,6 +14,7 @@ import {
   obtenerUsuariosService,
 } from '../services/Usuario';
 import Confirmacion from '../components/Confirmacion';
+import { Spinner } from '../components/Spinner';
 
 const initialForm = {
   nombres: '',
@@ -35,11 +36,14 @@ export const Usuario = () => {
   const [errors, setErrors] = useState({});
   const [showConfirm, setshowConfirm] = useState(false);
   const [idConfirm, setIdConfirm] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     const listarUsuarios = async () => {
       const respuesta = await obtenerUsuariosService();
       setUsuarios(respuesta);
+      setLoading(false);
     };
     listarUsuarios();
   }, []);
@@ -68,50 +72,53 @@ export const Usuario = () => {
   };
 
   return (
-    <>
-      <h1 className="mt-3 text-center">USUARIOS</h1>
-      <div className="container">
-        <NotificationContainer />
-        <hr />
-        <Button className="mb-4" onClick={() => setShow(!show)}>
-          Agregar Usuario <FontAwesomeIcon className="ml-2" icon={faUserPlus} />
-        </Button>
-        <Confirmacion
-          title={'Eliminando Usuario'}
-          mensaje={'¿Está seguro que desea eliminar éste usuario?'}
-          showConfirm={showConfirm}
-          handleClose={handleClose}
-          handleConfirm={handleConfirm}
-        />
-        <Formulario
-          setShow={setShow}
-          show={show}
-          setUsuarios={setUsuarios}
-          usuarios={usuarios}
-          setUsuario={setUsuario}
-          usuario={usuario}
-          initialForm={initialForm}
-          setErrors={setErrors}
-          errors={errors}
-        />
-        <Tabla
-          usuarios={usuarios}
-          setUsuario={setUsuario}
-          setShow={setShow}
-          showCambiarPassword={showCambiarPassword}
-          setShowCambiarPassword={setShowCambiarPassword}
-          eliminarUsuario={eliminarUsuario}
-        />
-        <CambiarPassword
-          showCambiarPassword={showCambiarPassword}
-          setShowCambiarPassword={setShowCambiarPassword}
-          usuario={usuario}
-          usuarios={usuarios}
-          setUsuarios={setUsuarios}
-          setUsuario={setUsuario}
-          initialForm={initialForm}
-        />
-      </div>
-    </>
+    loading ?
+      <Spinner />
+      :
+      <>
+        <h1 className="mt-3 text-center">USUARIOS</h1>
+        <div className="container">
+          <NotificationContainer />
+          <hr />
+          <Button className="mb-4" onClick={() => setShow(!show)}>
+            Agregar Usuario <FontAwesomeIcon className="ml-2" icon={faUserPlus} />
+          </Button>
+          <Confirmacion
+            title={'Eliminando Usuario'}
+            mensaje={'¿Está seguro que desea eliminar éste usuario?'}
+            showConfirm={showConfirm}
+            handleClose={handleClose}
+            handleConfirm={handleConfirm}
+          />
+          <Formulario
+            setShow={setShow}
+            show={show}
+            setUsuarios={setUsuarios}
+            usuarios={usuarios}
+            setUsuario={setUsuario}
+            usuario={usuario}
+            initialForm={initialForm}
+            setErrors={setErrors}
+            errors={errors}
+          />
+          <Tabla
+            usuarios={usuarios}
+            setUsuario={setUsuario}
+            setShow={setShow}
+            showCambiarPassword={showCambiarPassword}
+            setShowCambiarPassword={setShowCambiarPassword}
+            eliminarUsuario={eliminarUsuario}
+          />
+          <CambiarPassword
+            showCambiarPassword={showCambiarPassword}
+            setShowCambiarPassword={setShowCambiarPassword}
+            usuario={usuario}
+            usuarios={usuarios}
+            setUsuarios={setUsuarios}
+            setUsuario={setUsuario}
+            initialForm={initialForm}
+          />
+        </div>
+      </>
   );
 };

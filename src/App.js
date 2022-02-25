@@ -42,6 +42,8 @@ function App() {
               </RutaPrivada>
             }
           />
+
+
           {/* <Route path='/inicio' element={<Layout />} >
             <Route index element={<Inicio />} />
           </Route> */}

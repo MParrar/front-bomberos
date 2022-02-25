@@ -12,7 +12,7 @@ const RutaPrivada = ({ children }) => {
     }, []);
 
 
-    return (autenticado && !cargando) ? children : <Navigate to="/" />
+    return (!autenticado && !cargando) ? <Navigate to="/" /> : children
 
 }
 
