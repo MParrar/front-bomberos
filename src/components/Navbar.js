@@ -66,7 +66,7 @@ export const Navbar = () => {
               </Link>
             </li>
             {SidebarData.map((item, index) => {
-              if (item.rol === 'all' || item.rol === usuario?.usuario.rol || usuario?.usuario.rol === 'Cuartel') {
+              if (item.rol.includes(usuario?.usuario.rol)) {
                 return (
                   <li key={index} className={item.cName}>
                     <Link to={item.path} onClick={item.path === '/' && (cerrarSesion)}>
