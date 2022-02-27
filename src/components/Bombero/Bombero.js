@@ -1,16 +1,25 @@
-import React from 'react';
-import { Button, Card } from 'react-bootstrap';
+import React, { useContext } from 'react';
+import { Card } from 'react-bootstrap';
+import AuthContext from '../../context/autenticacion/authContext';
 
 export const Bombero = ({ bombero, setBusqueda, setBombero }) => {
+
   const { nombres, apellidos, cargo, codigo, imagen } = bombero;
 
+  const authContext = useContext(AuthContext);
+  const { usuario } = authContext;
+  const handleClick = () => {
+    setBusqueda(true)
+    setBombero(bombero)
+  }
   return (
     <Card className="mr-4 mt-4 imgHover" >
       <Card.Img
-        onClick={() => {
-          setBusqueda(true);
-          setBombero(bombero);
-        }}
+        onClick={() => usuario?.usuario?.rol !== 'Bombero' ?
+          handleClick()
+          :
+          null
+        }
         style={{
           cursor: 'pointer',
 

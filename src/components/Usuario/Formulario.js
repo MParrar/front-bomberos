@@ -8,6 +8,7 @@ import {
   NotificationManager,
 } from 'react-notifications';
 import { crearUsuario, editarUsuario } from '../../services/Usuario';
+import { Fn, formatRut } from '../../helpers';
 
 export const Formulario = ({
   show,
@@ -115,7 +116,14 @@ export const Formulario = ({
       );
       return;
     }
-
+    if (!Fn.validaRut(rut.replace(/\./g, '')) || rut.length < 2) {
+      NotificationManager.warning(
+        'El Rut ingresado no es válido',
+        'Advertencia!',
+        2500
+      );
+      return;
+    }
     const respuesta = await crearUsuario(usuario);
     setUsuarios([...usuarios, respuesta]);
     NotificationManager.success(
@@ -241,8 +249,9 @@ export const Formulario = ({
                   <Form.Label htmlFor="rut">Rut</Form.Label>
                   <Form.Control
                     type="text"
-                    placeholder="Ingrese Rut"
-                    value={rut}
+                    placeholder="Ingrese  Rut"
+                    value={(rut)}
+                    onBlur={rut.length > 2 ? ((e) => setUsuario({ ...usuario, 'rut': formatRut(e.target.value) })) : undefined}
                     name="rut"
                     id="rut"
                     onChange={handleChange}
@@ -328,6 +337,7 @@ export const Formulario = ({
                       type="file"
                       id="formFile"
                       name="imagen"
+                      accept="image/x-png,image/gif,image/jpeg"
                       // value={imagen}
                       onChange={handleFileInputChange}
                     />

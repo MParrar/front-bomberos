@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Col, FormControl, Row } from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
 import {
@@ -8,6 +8,7 @@ import {
 import { Bombero } from './Bombero';
 import { SwitchBombero } from './SwitchBombero';
 import { Spinner } from '../Spinner';
+import AuthContext from '../../context/autenticacion/authContext';
 
 export const ListaBomberos = () => {
 
@@ -16,6 +17,8 @@ export const ListaBomberos = () => {
   const [bombero, setBombero] = useState({});
   const [browser, setBrowser] = useState('');
   const [loading, setLoading] = useState(false);
+  const authContext = useContext(AuthContext);
+  const { usuario } = authContext;
 
   const getBomberos = async () => {
     setLoading(true);
@@ -71,36 +74,38 @@ export const ListaBomberos = () => {
       <Spinner />
       :
       <Container>
-        <Row
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          <Col xs={12} sm={12} md={4} xl={4} xxl={4}>
-            <FormControl
-              type="search"
-              placeholder="Buscar por Rut o Nombre"
-              id="browser"
-              list="browsers"
-              aria-label="Search"
-              style={{ margin: '0 auto' }}
-              name="browser"
-              onChange={handleBusqueda}
-              value={browser}
-            />
-            <datalist id="browsers">
-              {bomberos.map((bombero) => (
-                <option
-                  key={bombero._id}
-                  value={bombero.rut}
-                  label={bombero.nombres}
-                />
-              ))}
-            </datalist>
-          </Col>
-        </Row>
+        {usuario?.usuario?.rol !== 'Bombero' && (
+          <Row
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <Col xs={12} sm={12} md={4} xl={4} xxl={4}>
+              <FormControl
+                type="search"
+                placeholder="Buscar por Rut o Nombre"
+                id="browser"
+                list="browsers"
+                aria-label="Search"
+                style={{ margin: '0 auto' }}
+                name="browser"
+                onChange={handleBusqueda}
+                value={browser}
+              />
+              <datalist id="browsers">
+                {bomberos.map((bombero) => (
+                  <option
+                    key={bombero._id}
+                    value={bombero.rut}
+                    label={bombero.nombres}
+                  />
+                ))}
+              </datalist>
+            </Col>
+          </Row>
+        )}
 
         {busqueda ? (
           <SwitchBombero

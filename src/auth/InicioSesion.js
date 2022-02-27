@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import AuthContext from '../context/autenticacion/authContext';
 import { Alerta } from '../components/Alerta';
 import { Spinner } from '../components/Spinner';
+import { Fn, formatRut } from '../helpers';
 
 export const InicioSesion = () => {
 
@@ -45,6 +46,13 @@ export const InicioSesion = () => {
             }, 2000);
             return;
         }
+        if (!Fn.validaRut(rut.replace(/\./g, '')) || rut.length < 2) {
+            setError('El Rut ingresado no es válido');
+            setTimeout(() => {
+                setError('')
+            }, 2000);
+            return;
+        }
 
         setLoading(true);
         iniciarSesion({ rut, password });
@@ -73,6 +81,8 @@ export const InicioSesion = () => {
                                 placeholder="Ingrese Rut"
                                 value={rut}
                                 onChange={onChange}
+                                onBlur={rut.length > 2 ? ((e) => guardarUsuario({ ...usuario, 'rut': formatRut(e.target.value) })) : undefined}
+
                             />
                         </div>
 

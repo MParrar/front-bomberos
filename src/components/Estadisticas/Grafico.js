@@ -81,7 +81,6 @@ const Grafico = () => {
     var m_year = monday.getFullYear();
     var m_month = monday.getMonth() + 1;
     var m_date = monday.getDate();
-    console.log(m_year + '-' + m_month + '-' + m_date); // Mes, año, mes y día
   };
 
   const data = {
