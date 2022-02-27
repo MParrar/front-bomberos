@@ -24,49 +24,49 @@ export const SwitchBombero = ({
     setLoading(false);
   };
 
-  return (
-    loading ?
-      <Spinner />
-      :
-      <Container>
-        <Row
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          <Col xs={12} sm={12} md={4} xl={4} xxl={4}>
-            <Card className="mr-2 mt-4" style={{ margin: '0 auto' }}>
-              <Card.Header>
-                <Form.Check
-                  type="switch"
-                  id="custom-switch"
-                  label={`${servicio ? 'Desactivar' : 'Activar'}`}
-                  checked={servicio}
-                  onChange={(e) => handleChange(e)}
-                  style={{ float: 'right' }}
-                />
-              </Card.Header>
-              <Card.Img variant="top" src={imagen} width={270} height={300} />
-              <Card.Body>
-                <Card.Title className="text-center">{`${nombres} ${apellidos}`}</Card.Title>
-                <Card.Text className="text-center">{cargo}</Card.Text>
-                <Card.Text className="text-center">{codigo}</Card.Text>
-              </Card.Body>
-              <Card.Footer
-                onClick={handleClick}
-                style={{
-                  justifyContent: 'center',
-                  textAlign: 'center',
-                  cursor: 'pointer',
-                }}
-              >
-                <FontAwesomeIcon icon={faArrowLeftLong} size="3x" />
-              </Card.Footer>
-            </Card>
-          </Col>
-        </Row>
-      </Container>
+  return loading ? (
+    <Spinner />
+  ) : (
+    <Container>
+      <Row
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <Col xs={12} sm={12} md={4} xl={4} xxl={4}>
+          <Card className="mr-2 mt-4" style={{ margin: '0 auto' }}>
+            <Card.Header style={{ fontSize: '1.2rem' }}>
+              <Form.Check
+                type="switch"
+                id="custom-switch"
+                label={`${servicio ? 'Desactivar' : 'Activar'}`}
+                checked={servicio}
+                onChange={(e) => handleChange(e)}
+                style={{ float: 'right' }}
+              />
+            </Card.Header>
+            <Card.Img variant="top" src={imagen} width={270} height={300} />
+            <Card.Body className="cuerpo-card">
+              <p className="text-center nombre">{`${nombres} ${apellidos}`}</p>
+              <p className="text-center cargo">{cargo}</p>
+              <p className="text-center codigo">{codigo}</p>
+            </Card.Body>
+            <Card.Body
+              onClick={handleClick}
+              className="footer-card"
+              style={{
+                justifyContent: 'center',
+                textAlign: 'center',
+                cursor: 'pointer',
+              }}
+            >
+              <FontAwesomeIcon icon={faArrowLeftLong} size="3x" />
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+    </Container>
   );
 };

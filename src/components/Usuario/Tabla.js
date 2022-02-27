@@ -11,8 +11,15 @@ export const Tabla = ({
   eliminarUsuario,
 }) => {
   return (
-    <Row className='tablaUsuario' >
-      <Col xs={12} sm={12} md={12} xl={12} xxl={12} style={{ overflowX: 'auto' }}>
+    <Row className="tablaUsuario">
+      <Col
+        xs={12}
+        sm={12}
+        md={12}
+        xl={12}
+        xxl={12}
+        style={{ overflowX: 'auto' }}
+      >
         <Table striped bordered hover>
           <thead>
             <tr>
@@ -27,7 +34,7 @@ export const Tabla = ({
             {usuarios.length > 0 ? (
               usuarios.map((usuario, index) => (
                 <Usuario
-                  key={usuario._id}
+                  key={usuario?._id}
                   usuario={usuario}
                   index={index}
                   setUsuario={setUsuario}

@@ -250,8 +250,16 @@ export const Formulario = ({
                   <Form.Control
                     type="text"
                     placeholder="Ingrese  Rut"
-                    value={(rut)}
-                    onBlur={rut.length > 2 ? ((e) => setUsuario({ ...usuario, 'rut': formatRut(e.target.value) })) : undefined}
+                    value={rut}
+                    onBlur={
+                      rut.length > 2
+                        ? (e) =>
+                            setUsuario({
+                              ...usuario,
+                              rut: formatRut(e.target.value),
+                            })
+                        : undefined
+                    }
                     name="rut"
                     id="rut"
                     onChange={handleChange}
