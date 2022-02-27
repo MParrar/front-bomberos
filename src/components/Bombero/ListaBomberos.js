@@ -11,12 +11,12 @@ import { Spinner } from '../Spinner';
 import AuthContext from '../../context/autenticacion/authContext';
 
 export const ListaBomberos = () => {
-
   const [bomberos, setBomberos] = useState([]);
   const [busqueda, setBusqueda] = useState(false);
   const [bombero, setBombero] = useState({});
   const [browser, setBrowser] = useState('');
   const [loading, setLoading] = useState(false);
+
   const authContext = useContext(AuthContext);
   const { usuario } = authContext;
 
@@ -25,7 +25,6 @@ export const ListaBomberos = () => {
     const respuestaActivos = await obtenerBomberosActivos();
     setBomberos(respuestaActivos);
     setLoading(false);
-
   };
 
   useEffect(() => {
@@ -68,75 +67,72 @@ export const ListaBomberos = () => {
     setLoading(false);
   };
 
-  return (
+  return loading ? (
+    <Spinner />
+  ) : (
+    <Container>
+      {usuario?.usuario?.rol !== 'Bombero' && (
+        <Row
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <Col xs={12} sm={12} md={4} xl={4} xxl={4}>
+            <FormControl
+              type="search"
+              placeholder="Buscar por Rut o Nombre"
+              id="browser"
+              list="browsers"
+              aria-label="Search"
+              style={{ margin: '0 auto' }}
+              name="browser"
+              onChange={handleBusqueda}
+              value={browser}
+            />
+            <datalist id="browsers">
+              {bomberos.map((bombero) => (
+                <option
+                  key={bombero._id}
+                  value={bombero.rut}
+                  label={bombero.nombres}
+                />
+              ))}
+            </datalist>
+          </Col>
+        </Row>
+      )}
 
-    loading ?
-      <Spinner />
-      :
-      <Container>
-        {usuario?.usuario?.rol !== 'Bombero' && (
-          <Row
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            <Col xs={12} sm={12} md={4} xl={4} xxl={4}>
-              <FormControl
-                type="search"
-                placeholder="Buscar por Rut o Nombre"
-                id="browser"
-                list="browsers"
-                aria-label="Search"
-                style={{ margin: '0 auto' }}
-                name="browser"
-                onChange={handleBusqueda}
-                value={browser}
-              />
-              <datalist id="browsers">
-                {bomberos.map((bombero) => (
-                  <option
-                    key={bombero._id}
-                    value={bombero.rut}
-                    label={bombero.nombres}
-                  />
-                ))}
-              </datalist>
-            </Col>
-          </Row>
-        )}
-
-        {busqueda ? (
-          <SwitchBombero
-            handleChange={handleChange}
-            bombero={bombero}
-            setBusqueda={setBusqueda}
-            setBrowser={setBrowser}
-          />
-        ) : (
-          <div className="content">
-            <div className="cuerpo">
-              <div className="cards mr-4">
-                {bomberos?.map((bombero) => {
-                  if (bombero.servicio && bombero.activo) {
-                    return (
-                      <Bombero
-                        key={bombero._id}
-                        bombero={bombero}
-                        setBusqueda={setBusqueda}
-                        setBombero={setBombero}
-                      />
-                    );
-                  } else {
-                    return null;
-                  }
-                })}
-              </div>
+      {busqueda ? (
+        <SwitchBombero
+          handleChange={handleChange}
+          bombero={bombero}
+          setBusqueda={setBusqueda}
+          setBrowser={setBrowser}
+        />
+      ) : (
+        <div className="content">
+          <div className="cuerpo">
+            <div className="cards mr-4">
+              {bomberos?.map((bombero) => {
+                if (bombero.servicio && bombero.activo) {
+                  return (
+                    <Bombero
+                      key={bombero._id}
+                      bombero={bombero}
+                      setBusqueda={setBusqueda}
+                      setBombero={setBombero}
+                    />
+                  );
+                } else {
+                  return null;
+                }
+              })}
             </div>
           </div>
-        )}
-      </Container>
-
+        </div>
+      )}
+    </Container>
   );
 };

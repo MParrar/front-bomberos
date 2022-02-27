@@ -4,8 +4,8 @@
   --gris2: #2f3848;
   --gris3: #1a202d;
   --negro: #000000;
-  --headingFont: "Raleway", sans-serif;
-  --textFont: "Roboto", sans-serif;
+  --headingFont: 'Raleway', sans-serif;
+  --textFont: 'Roboto', sans-serif;
 }
 *,
 *:before,
@@ -26,7 +26,7 @@ body {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
 
@@ -44,7 +44,7 @@ h2 {
   max-width: 1024px;
   margin: 0 auto;
   padding-bottom: 0px;
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-size: 0.8em;
 }
 
@@ -117,8 +117,8 @@ h2 {
   flex: 0 0 100px;
   font-family: var(--textFont);
 }
-.campo-form input[type="password"],
-.campo-form input[type="text"] {
+.campo-form input[type='password'],
+.campo-form input[type='text'] {
   border: 1px solid #e1e1e1;
   padding: 1rem;
   flex: 1;
@@ -136,4 +136,28 @@ h2 {
   font-size: 2.2rem;
   text-align: center;
   width: 100%;
+}
+
+.cuerpo-card {
+  background-color: rgba(6, 11, 38);
+  color: white;
+}
+
+.footer-card {
+  background-color: rgba(6, 11, 38, 0.883);
+  color: white;
+}
+
+.nombre {
+  font-size: 1.7rem;
+  border-bottom: 1px solid;
+}
+
+.cargo {
+  font-size: 1.2rem;
+  border-bottom: 1px solid;
+}
+
+.codigo {
+  font-size: 1rem;
 }
