@@ -10,27 +10,27 @@ export const SidebarData = [
     path: '/inicio',
     icon: <AiIcons.AiFillHome />,
     cName: 'nav-text',
-    rol: 'all'
+    rol: 'all',
   },
   {
     title: 'Usuarios',
     path: '/usuario',
     icon: <FaIcons.FaUser />,
     cName: 'nav-text',
-    rol: 'Administrador'
+    rol: 'Administrador',
   },
   {
     title: 'Estadísticas',
     path: '/estadisticas',
     icon: <FcIcons.FcStatistics />,
     cName: 'nav-text',
-    rol: 'Administrador'
+    rol: 'all',
   },
   {
     title: 'Cerrar Sesion',
     path: '/',
     icon: <BiIcons.BiLogOut />,
     cName: 'nav-text sesion-side-bar',
-    rol: 'all'
+    rol: 'all',
   },
 ];

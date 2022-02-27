@@ -81,6 +81,7 @@ export const bomberoServicio = async (id, servicio) => {
 export const desactivarUsuario = async (id, activo) => {
   try {
     const { data } = await clienteAxios.put(`/usuario/alta-naja/${id}`);
+    return data;
   } catch (error) {
     console.log(error);
   }
@@ -89,6 +90,15 @@ export const desactivarUsuario = async (id, activo) => {
 export const obtenerEstadisticas = async () => {
   try {
     const { data } = await clienteAxios.get('/usuario/logs');
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const obtenerMisLogs = async (id) => {
+  try {
+    const { data } = await clienteAxios.get(`/usuario/mislogs/${id}`);
     return data;
   } catch (error) {
     console.log(error);
