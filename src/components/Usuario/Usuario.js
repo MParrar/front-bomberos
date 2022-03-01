@@ -6,6 +6,7 @@ import {
   faTrash,
   faKey,
 } from '@fortawesome/free-solid-svg-icons';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 export const Usuario = ({
   usuario,
@@ -23,40 +24,53 @@ export const Usuario = ({
       <td>{apellidos}</td>
       <td>{cargo}</td>
       <td className="text-center">
-        <Button
-          size="sm"
-          style={{ marginRight: '7px' }}
-          variant="warning"
-          onClick={() => {
-            setUsuario(usuario);
-            setShow(true);
-          }}
+        <OverlayTrigger
+          placement="bottom"
+          overlay={<Tooltip id="button-editar">Editar</Tooltip>}
         >
-          <FontAwesomeIcon icon={faPenToSquare} />
-        </Button>
-
-        <Button
-          size="sm"
-          style={{ marginRight: '7px' }}
-          variant="danger"
-          className="ml-3"
-          onClick={() => eliminarUsuario(_id)}
+          <Button
+            size="sm"
+            style={{ marginRight: '7px' }}
+            variant="warning"
+            onClick={() => {
+              setUsuario(usuario);
+              setShow(true);
+            }}
+          >
+            <FontAwesomeIcon icon={faPenToSquare} />
+          </Button>
+        </OverlayTrigger>
+        <OverlayTrigger
+          placement="bottom"
+          overlay={<Tooltip id="button-eliminar">Eliminar</Tooltip>}
         >
-          <FontAwesomeIcon icon={faTrash} />
-        </Button>
-
-        <Button
-          size="sm"
-          style={{ marginRight: '7px' }}
-          variant="secondary"
-          onClick={() => {
-            setUsuario(usuario);
-            setShowCambiarPassword(true);
-          }}
-          className="ml-3"
+          <Button
+            size="sm"
+            style={{ marginRight: '7px' }}
+            variant="danger"
+            className="ml-3"
+            onClick={() => eliminarUsuario(_id)}
+          >
+            <FontAwesomeIcon icon={faTrash} />
+          </Button>
+        </OverlayTrigger>
+        <OverlayTrigger
+          placement="bottom"
+          overlay={<Tooltip id="button-password">Cambiar Contraseña</Tooltip>}
         >
-          <FontAwesomeIcon icon={faKey} />
-        </Button>
+          <Button
+            size="sm"
+            style={{ marginRight: '7px' }}
+            variant="secondary"
+            onClick={() => {
+              setUsuario(usuario);
+              setShowCambiarPassword(true);
+            }}
+            className="ml-3"
+          >
+            <FontAwesomeIcon icon={faKey} />
+          </Button>
+        </OverlayTrigger>
       </td>
     </tr>
   );

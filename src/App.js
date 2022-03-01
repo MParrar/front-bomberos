@@ -2,7 +2,7 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-notifications/lib/notifications.css';
 import { Layout } from './components/Layout';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { HashRouter, Route, Routes } from 'react-router-dom';
 import { Usuario } from './Pages/Usuario';
 import { Inicio } from './Pages/Inicio';
 import { Login } from './Pages/Login';
@@ -20,7 +20,7 @@ if (token) {
 function App() {
   return (
     <AuthState>
-      <BrowserRouter>
+      <HashRouter>
         <Routes>
           <Route path="/" element={<Login />}></Route>
           <Route
@@ -53,14 +53,8 @@ function App() {
               </RutaPrivada>
             }
           />
-          {/* <Route path='/inicio' element={<Layout />} >
-            <Route index element={<Inicio />} />
-          </Route> */}
-          {/* <Route path='/usuario' element={<Layout />} >
-            <Route index element={<Usuario />} />
-          </Route> */}
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
     </AuthState>
   );
 }

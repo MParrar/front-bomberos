@@ -1,5 +1,6 @@
-export const formatRut = (rut) => {
-    const newRut = rut.replace(/\./g, '').replace(/-/g, '').trim().toLowerCase();
+export const formatRut2 = (rut) => {
+    // XX.XXX.XXX-X
+    const newRut = rut.replace(/\./g, '').replace(/\-/g, '').trim().toLowerCase();
     const lastDigit = newRut.substr(-1, 1);
     const rutDigit = newRut.substr(0, newRut.length - 1)
     let format = '';
@@ -11,8 +12,7 @@ export const formatRut = (rut) => {
         }
     }
     return format.concat('-').concat(lastDigit);
-};
-
+}
 
 export const Fn = {
     // Valida el rut con su cadena completa "XXXXXXXX-X"
@@ -22,8 +22,8 @@ export const Fn = {
         var tmp = rutCompleto.split('-');
         var digv = tmp[1];
         var rut = tmp[0];
-        if (digv == 'K') digv = 'k';
-        return (Fn.dv(rut) == digv);
+        if (digv === 'K') digv = 'k';
+        return (Fn.dv(rut).toString() === digv);
     },
     dv: function (T) {
         var M = 0, S = 1;
@@ -33,3 +33,24 @@ export const Fn = {
     }
 }
 
+export const formatRut = (rut) => {
+    let div1, div2, div3, div4;
+
+    if (rut.length === 9) {
+        div1 = rut.slice(0, 2);
+        div2 = rut.slice(2, 5);
+        div3 = rut.slice(5, 8);
+        div4 = rut.slice(8, 9);
+        rut = (div1 + "." + div2 + "." + div3 + "-" + div4);
+
+    }
+    if (rut.length === 8) {
+        div1 = rut.slice(0, 1);
+        div2 = rut.slice(1, 4);
+        div3 = rut.slice(4, 7);
+        div4 = rut.slice(7, 8);
+
+        rut = (div1 + "." + div2 + "." + div3 + "-" + div4);
+    }
+    return rut;
+}

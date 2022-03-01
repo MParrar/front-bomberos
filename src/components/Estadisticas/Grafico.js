@@ -17,6 +17,7 @@ import {
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import { Col, Container, Form, Row } from 'react-bootstrap';
+import { Spinner } from '../Spinner';
 import AuthContext from '../../context/autenticacion/authContext';
 
 ChartJS.register(
@@ -63,19 +64,23 @@ const Grafico = () => {
   const [usuarioSeleccionado, setUsuarioSeleccionado] = useState({});
   const [tiempos, setTiempos] = useState(initialTimes);
   const [estadisticas, setEstadisticas] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   let scores = [0, 0, 0, 0, 0, 0, 0];
 
   const buscarInformacion = async () => {
+    setLoading(true);
     if (usuario.usuario.rol === 'Bombero') {
       const respuestaMisLogs = await obtenerMisLogs(usuario?.usuario?._id);
       calcularLog(respuestaMisLogs);
       setEstadisticas(respuestaMisLogs);
+      setLoading(false);
     } else {
       const respuestaLogs = await obtenerEstadisticas();
       setEstadisticas(respuestaLogs);
       const respuestaUsuarios = await obtenerUsuarios();
       setUsuarios(respuestaUsuarios);
+      setLoading(false);
     }
   };
 
@@ -103,7 +108,7 @@ const Grafico = () => {
     if (usuario) {
       setUsuarioSeleccionado(usuario);
       const busquedaLogs = estadisticas.filter(
-        (log) => log.usuario._id === usuario._id
+        (log) => log.usuario?._id === usuario?._id
       );
       calcularLog(busquedaLogs);
     }
@@ -115,68 +120,77 @@ const Grafico = () => {
         const dia = new Date(log.createdAt).getDay().toLocaleString('es-CL');
         if (log.total) {
           if (dia === '1') {
-            scores[0] = (scores[0] + log.total) / 60;
+            scores[0] += (log.total) / 60;
             setTiempos(scores);
           }
           if (dia === '2') {
-            scores[1] = (scores[1] + log.total) / 60;
+            scores[1] += (log.total) / 60;
             setTiempos(scores);
           }
           if (dia === '3') {
-            scores[2] = (scores[2] + log.total) / 60;
+            scores[2] += (log.total) / 60;
             setTiempos(scores);
           }
           if (dia === '4') {
-            scores[3] = (scores[3] + log.total) / 60;
+            scores[3] += (log.total) / 60;
             setTiempos(scores);
           }
           if (dia === '5') {
-            scores[4] = (scores[4] + log.total) / 60;
+            scores[4] += (log.total) / 60;
             setTiempos(scores);
           }
           if (dia === '6') {
-            scores[5] = (scores[5] + log.total) / 60;
+            scores[5] += (log.total) / 60;
             setTiempos(scores);
           }
           if (dia === '0') {
-            scores[6] = (scores[6] + log.total) / 60;
+            scores[6] += (log.total) / 60;
             setTiempos(scores);
           }
         }
       });
+    } else {
+      setTiempos(initialTimes)
     }
   };
 
   return (
     <Container>
-      <Row>
-        <Col xs={0} sm={2} md={4} xl={4} xxl={4}></Col>
-        <Col xs={12} sm={8} md={4} xl={4} xxl={4}>
-          {usuario?.usuario.rol === 'Bombero' ? (
-            <h4 className="text-center">Información horas en servicio</h4>
-          ) : (
-            <Form.Control
-              as="select"
-              name="usuario"
-              value={usuarioSeleccionado._id}
-              onChange={handleChange}
-            >
-              <option>-- Seleccione Usuario- -</option>
-              {usuarios &&
-                usuarios.map((usuario) => (
-                  <option
-                    key={usuario._id}
-                    value={usuario._id}
-                  >{`${usuario.nombres} ${usuario.apellidos}`}</option>
-                ))}
-            </Form.Control>
-          )}
-        </Col>
-        <Col xs={0} sm={2} md={4} xl={4} xxl={4}></Col>
-      </Row>
-      <Container>
-        <Bar data={data} options={options} />
-      </Container>
+      {
+        loading ?
+          <Spinner />
+          :
+          <>
+            <Row>
+              <Col xs={0} sm={2} md={4} xl={4} xxl={4}></Col>
+              <Col xs={12} sm={8} md={4} xl={4} xxl={4}>
+                {usuario?.usuario.rol === 'Bombero' ? (
+                  <h4 className="text-center">Información horas en servicio</h4>
+                ) : (
+                  <Form.Control
+                    as="select"
+                    name="usuario"
+                    value={usuarioSeleccionado._id}
+                    onChange={handleChange}
+                  >
+                    <option>-- Seleccione Usuario- -</option>
+                    {usuarios &&
+                      usuarios.map((usuario) => (
+                        <option
+                          key={usuario._id}
+                          value={usuario._id}
+                        >{`${usuario.nombres} ${usuario.apellidos}`}</option>
+                      ))}
+                  </Form.Control>
+                )}
+              </Col>
+              <Col xs={0} sm={2} md={4} xl={4} xxl={4}></Col>
+            </Row>
+            <Container>
+              <Bar data={data} options={options} />
+            </Container>
+          </>
+      }
     </Container>
   );
 };

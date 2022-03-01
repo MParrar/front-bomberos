@@ -73,7 +73,7 @@ export const Usuario = () => {
       <Spinner />
       :
       <>
-        <h1 className="mt-3 text-center ">USUARIOS</h1>
+        <h1 className="mt-3 text-center ">Lista de Usuarios</h1>
         <div className="container">
           <NotificationContainer />
           <hr />

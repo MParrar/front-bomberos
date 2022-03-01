@@ -111,28 +111,35 @@ export const ListaBomberos = () => {
           setBusqueda={setBusqueda}
           setBrowser={setBrowser}
         />
-      ) : (
-        <div className="content">
-          <div className="cuerpo">
-            <div className="cards mr-4">
-              {bomberos?.map((bombero) => {
-                if (bombero.servicio && bombero.activo) {
-                  return (
-                    <Bombero
-                      key={bombero._id}
-                      bombero={bombero}
-                      setBusqueda={setBusqueda}
-                      setBombero={setBombero}
-                    />
-                  );
-                } else {
-                  return null;
-                }
-              })}
+      ) :
+
+        (bomberos?.filter(item => item.servicio && item.activo).length > 0)
+          ?
+          <div className="content">
+            <div className="cuerpo">
+              <div className="cards mr-4">
+                {bomberos?.map((bombero) => {
+                  if (bombero.servicio && bombero.activo) {
+                    return (
+                      <Bombero
+                        key={bombero._id}
+                        bombero={bombero}
+                        setBusqueda={setBusqueda}
+                        setBombero={setBombero}
+                      />
+                    );
+                  }
+                })}
+              </div>
             </div>
           </div>
-        </div>
-      )}
+          :
+          <div>
+            <p className='text-center mt-4' style={{ fontSize: '1.2rem', margin: '0 auto' }}>No hay Bomberos en el cuartel...</p>
+          </div>
+      }
+
+
     </Container>
   );
 };

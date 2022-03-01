@@ -250,14 +250,14 @@ export const Formulario = ({
                   <Form.Control
                     type="text"
                     placeholder="Ingrese  Rut"
-                    value={rut}
+                    value={_id ? formatRut(rut) : rut}
                     onBlur={
                       rut.length > 2
                         ? (e) =>
-                            setUsuario({
-                              ...usuario,
-                              rut: formatRut(e.target.value),
-                            })
+                          setUsuario({
+                            ...usuario,
+                            rut: formatRut(e.target.value),
+                          })
                         : undefined
                     }
                     name="rut"
@@ -284,10 +284,11 @@ export const Formulario = ({
                     <option value="CAPITAN">CAPITAN</option>
                     <option value="DIRECTOR">DIRECTOR</option>
                     <option value="TENIENTE PRIMERO">TENIENTE PRIMERO</option>
-                    <option value="TENIENTE SEGUNDO">TENIENTE SEGUNDOL</option>
+                    <option value="TENIENTE SEGUNDO">TENIENTE SEGUNDO</option>
                     <option value="AYUDANTE DE CIA">AYUDANTE DE CIA</option>
                     <option value="SECRETARIA ">SECRETARIA </option>
                     <option value="TESORERO">TESORERO</option>
+                    <option value="VOLUNTARIO">VOLUNTARIO</option>
                   </Form.Select>
                 </Form.Group>
               </Col>
@@ -295,10 +296,10 @@ export const Formulario = ({
             <Row>
               <Col sm={12} md={6} xl={6}>
                 <Form.Group className="mb-3">
-                  <Form.Label htmlFor="codigo">Codigo</Form.Label>
+                  <Form.Label htmlFor="codigo">Código</Form.Label>
                   <Form.Control
                     type="text"
-                    placeholder="Ingrese Codigo"
+                    placeholder="Ingrese Código"
                     value={codigo}
                     name="codigo"
                     id="codigo"
@@ -346,7 +347,6 @@ export const Formulario = ({
                       id="formFile"
                       name="imagen"
                       accept="image/x-png,image/gif,image/jpeg"
-                      // value={imagen}
                       onChange={handleFileInputChange}
                     />
                   </div>
