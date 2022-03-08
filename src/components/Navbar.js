@@ -41,22 +41,31 @@ export const Navbar = () => {
           <Link to="#" className="menu-bars">
             <FaIcons.FaBars onClick={showSidebar} />
           </Link>
-          <h4 className="title-bars">Primera Compañia Bomberos de Pinto</h4>
-          <DropdownButton
-            as={ButtonGroup}
-            variant="secondary"
-            className="sesion-bars"
-            title={
-              usuario
-                ? `${usuario.usuario.nombres.split(' ')[0]}  ${usuario.usuario.apellidos.split(' ')[0]}`
-                : ''
-            }
-            id="bg-nested-dropdown"
-          >
-            <Dropdown.Item eventKey="1" onClick={() => cerrarSesionComponent()}>
-              Cerrar Sesión
-            </Dropdown.Item>
-          </DropdownButton>
+          <h4 className="title-bars mt-1">CUERPOS DE BOMBEROS DE PINTO <p style={{ fontSize: '1.8rem' }} className='text-center'>Fuerza y Unidad</p></h4>
+          {usuario?.usuario?.nombres ?
+            <DropdownButton
+              as={ButtonGroup}
+              variant="secondary"
+              className="sesion-bars"
+              title={
+                usuario
+                  ? `${usuario.usuario.nombres.split(' ')[0]}  ${usuario.usuario.apellidos.split(' ')[0]}`
+                  : ''
+              }
+              id="bg-nested-dropdown"
+            >
+              <Dropdown.Item eventKey="1" onClick={() => cerrarSesionComponent()}>
+                Cerrar Sesión
+              </Dropdown.Item>
+            </DropdownButton>
+            :
+            <Button
+              variant="secondary"
+              className="button-bars"
+            >
+              Cargando...
+            </Button>
+          }
         </div>
         <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
           <ul className="nav-menu-items" onClick={showSidebar}>

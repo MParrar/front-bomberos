@@ -11,8 +11,7 @@ export const InicioSesion = () => {
     const navigate = useNavigate();
     const [error, setError] = useState('');
     const authContext = useContext(AuthContext);
-    const { autenticado, iniciarSesion, mensaje } = authContext;
-    const [loading, setLoading] = useState(false);
+    const { autenticado, iniciarSesion, mensaje, loading } = authContext;
 
     const [usuario, guardarUsuario] = useState({
         rut: '',
@@ -54,9 +53,7 @@ export const InicioSesion = () => {
             return;
         }
 
-        setLoading(true);
         iniciarSesion({ rut, password });
-        setLoading(false);
     }
     return (
         loading ?

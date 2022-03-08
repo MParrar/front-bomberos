@@ -1,5 +1,6 @@
 import {
   CERRAR_SESION,
+  COMENZAR_INICIO_SESION,
   LOGIN_ERROR,
   LOGIN_EXITOSO,
   OBTENER_USUARIO,
@@ -14,6 +15,11 @@ export const AuthReducer = (state, action) => {
         usuario: action.payload,
         cargando: false,
       };
+    case COMENZAR_INICIO_SESION:
+      return {
+        ...state,
+        loading: true,
+      }
     case LOGIN_EXITOSO:
       localStorage.setItem('token', action.payload.token);
       return {
@@ -21,6 +27,8 @@ export const AuthReducer = (state, action) => {
         autenticado: true,
         mensaje: null,
         cargando: false,
+        loading: false,
+
       };
     case CERRAR_SESION:
     case LOGIN_ERROR:

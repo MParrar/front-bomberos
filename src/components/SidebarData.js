@@ -3,6 +3,7 @@ import * as FaIcons from 'react-icons/fa';
 import * as AiIcons from 'react-icons/ai';
 import * as FcIcons from 'react-icons/fc';
 import * as BiIcons from 'react-icons/bi';
+import * as BsIcons from 'react-icons/bs';
 
 export const SidebarData = [
   {
@@ -25,6 +26,13 @@ export const SidebarData = [
     icon: <FcIcons.FcStatistics />,
     cName: 'nav-text',
     rol: ['Bombero', 'Administrador'],
+  },
+  {
+    title: 'Citaciones',
+    path: '/citaciones',
+    icon: <BsIcons.BsNewspaper />,
+    cName: 'nav-text',
+    rol: ['Administrador'],
   },
   {
     title: 'Cerrar Sesion',

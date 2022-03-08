@@ -32,6 +32,7 @@ export const Formulario = ({
     activo,
     imagen,
     _id,
+    especialidad
   } = usuario;
 
   const validarFormulario = (usuario) => {
@@ -277,18 +278,21 @@ export const Formulario = ({
                   >
                     <option>-- Seleccione Cargo- -</option>
                     <option value="COMANDANTE">COMANDANTE</option>
+                    <option value="SEGUNDO COMANDANTE">SEGUNDO COMANDANTE</option>
                     <option value="VICESUPERINTENDENTE">
-                      VICESUPERINTENDENTE
+                      VICESUPERINTENDENTE - VICESUPERINTENDENTA
                     </option>
-                    <option value="TESORERA GENERAL">TESORERA GENERAL</option>
-                    <option value="CAPITAN">CAPITAN</option>
-                    <option value="DIRECTOR">DIRECTOR</option>
+                    <option value="TESORERA GENERAL">TESORERA GENERAL - TESORERO GENERAL</option>
+                    <option value="SECRETARIO GENERAL">SECRETARIO GENERAL - SECRETARIA GENERAL</option>
+                    <option value="SEGUNDO INTENDETE">SSEGUNDO INTENDETE - SEGUNDA INTENDETE</option>
+                    <option value="CAPITAN">CAPITAN - CAPITANA</option>
+                    <option value="DIRECTOR">DIRECTOR - DIRECTORA</option>
                     <option value="TENIENTE PRIMERO">TENIENTE PRIMERO</option>
                     <option value="TENIENTE SEGUNDO">TENIENTE SEGUNDO</option>
                     <option value="AYUDANTE DE CIA">AYUDANTE DE CIA</option>
-                    <option value="SECRETARIA ">SECRETARIA </option>
-                    <option value="TESORERO">TESORERO</option>
-                    <option value="VOLUNTARIO">VOLUNTARIO</option>
+                    <option value="SECRETARIA ">SECRETARIA - SECRETARIO </option>
+                    <option value="TESORERO">TESORERO - TESORERA</option>
+                    <option value="VOLUNTARIO">BOMBERO - BOMBERA</option>
                   </Form.Select>
                 </Form.Group>
               </Col>
@@ -296,15 +300,19 @@ export const Formulario = ({
             <Row>
               <Col sm={12} md={6} xl={6}>
                 <Form.Group className="mb-3">
-                  <Form.Label htmlFor="codigo">Código</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Ingrese Código"
-                    value={codigo}
-                    name="codigo"
-                    id="codigo"
+                  <Form.Label>Especialidad</Form.Label>
+                  <Form.Select
+                    aria-label="Default select example"
+                    name="especialidad"
+                    value={especialidad}
                     onChange={handleChange}
-                  />
+                  >
+                    <option>-- Seleccione Especialidad- -</option>
+                    <option value="RESCATE">RESCATE</option>
+                    <option value="MAQUINISTA">
+                      MAQUINISTA
+                    </option>
+                  </Form.Select>
                 </Form.Group>
               </Col>
               <Col sm={12} md={6} xl={6}>

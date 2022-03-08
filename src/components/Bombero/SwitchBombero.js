@@ -41,13 +41,13 @@ export const SwitchBombero = ({
               <Form.Check
                 type="switch"
                 id="custom-switch"
-                label={`${servicio ? 'Desactivar' : 'Activar'}`}
+                label={`${servicio ? 'Fuera de Servicio' : 'En servicio'}`}
                 checked={servicio}
                 onChange={(e) => handleChange(e)}
                 style={{ float: 'right' }}
               />
             </Card.Header>
-            <Card.Img variant="top" src={imagen} width={270} height={300} />
+            <Card.Img variant="top" src={imagen} width={230} height={260} />
             <Card.Body className="cuerpo-card">
               <p className="text-center nombre">{`${nombres} ${apellidos}`}</p>
               <p className="text-center cargo">{cargo}</p>

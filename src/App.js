@@ -10,6 +10,8 @@ import AuthState from './context/autenticacion/authState';
 import { tokenAuth } from './config/token';
 import RutaPrivada from './components/rutas/RutaPrivada';
 import Estadisticas from './Pages/Estadisticas';
+import { Citaciones } from './Pages/Citaciones';
+import CuartelState from './context/cuarteles/cuartelState';
 
 const token = localStorage.getItem('token');
 
@@ -20,41 +22,54 @@ if (token) {
 function App() {
   return (
     <AuthState>
-      <HashRouter>
-        <Routes>
-          <Route path="/" element={<Login />}></Route>
-          <Route
-            exact
-            path="/inicio"
-            element={
-              <RutaPrivada>
-                <Layout />
-                <Inicio />
-              </RutaPrivada>
-            }
-          />
-          <Route
-            exact
-            path="/usuario"
-            element={
-              <RutaPrivada>
-                <Layout />
-                <Usuario />
-              </RutaPrivada>
-            }
-          />
-          <Route
-            exact
-            path="/estadisticas"
-            element={
-              <RutaPrivada>
-                <Layout />
-                <Estadisticas />
-              </RutaPrivada>
-            }
-          />
-        </Routes>
-      </HashRouter>
+      <CuartelState>
+        <HashRouter>
+          <Routes>
+            <Route path="/" element={<Login />}></Route>
+            <Route
+              exact
+              path="/inicio"
+              element={
+                <RutaPrivada>
+                  <Layout />
+                  <Inicio />
+                </RutaPrivada>
+              }
+            />
+            <Route
+              exact
+              path="/usuario"
+              element={
+                <RutaPrivada>
+                  <Layout />
+                  <Usuario />
+                </RutaPrivada>
+              }
+            />
+            <Route
+              exact
+              path="/estadisticas"
+              element={
+                <RutaPrivada>
+                  <Layout />
+                  <Estadisticas />
+                </RutaPrivada>
+              }
+            />
+            <Route
+              exact
+              path="/citaciones"
+              element={
+                <RutaPrivada>
+                  <Layout />
+                  <Citaciones />
+                </RutaPrivada>
+              }
+            />
+          </Routes>
+
+        </HashRouter>
+      </CuartelState>
     </AuthState>
   );
 }

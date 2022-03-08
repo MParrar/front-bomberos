@@ -20,15 +20,15 @@ export const Bombero = ({ bombero, setBusqueda, setBombero }) => {
         style={{
           cursor: 'pointer',
         }}
-        width={270}
-        height={230}
+        width={190}
+        height={120}
         variant="top"
         src={imagen}
       />
       <Card.Body className="cuerpo-card">
-        <p className="text-center nombre">{`${nombres} ${apellidos}`}</p>
-        <p className="text-center cargo">{cargo}</p>
-        <p className="text-center codigo">{codigo}</p>
+        <h6 className="text-center nombre">{`${nombres} ${apellidos}`}</h6>
+        <h6 className="text-center cargo">{`${cargo[0]}${cargo.slice(1, cargo.length).toLowerCase()}`}</h6>
+        <h6 className="text-center codigo">{codigo}</h6>
       </Card.Body>
     </Card>
   );

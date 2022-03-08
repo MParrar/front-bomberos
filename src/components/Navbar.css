@@ -86,6 +86,10 @@ span {
     background: none;
     width: 10%;
   }
+  .button-bars {
+    margin-right: 2rem;
+    width: 10%;
+  }
 }
 
 @media (max-width: 768px) {

@@ -3,6 +3,7 @@ import clienteAxios from '../../config/axios';
 import { tokenAuth } from '../../config/token';
 import {
   CERRAR_SESION,
+  COMENZAR_INICIO_SESION,
   LOGIN_ERROR,
   LOGIN_EXITOSO,
   OBTENER_USUARIO,
@@ -17,6 +18,7 @@ const AuthState = ({ children }) => {
     usuario: null,
     mensaje: null,
     cargando: true,
+    loading: false
   };
 
   const [state, dispatch] = useReducer(AuthReducer, initalState);
@@ -42,6 +44,9 @@ const AuthState = ({ children }) => {
   };
   const iniciarSesion = async (datos) => {
     try {
+      dispatch({
+        type: COMENZAR_INICIO_SESION
+      })
       const respuesta = await clienteAxios.post('/auth', datos);
       dispatch({
         type: LOGIN_EXITOSO,
@@ -71,6 +76,7 @@ const AuthState = ({ children }) => {
         usuario: state.usuario,
         mensaje: state.mensaje,
         cargando: state.cargando,
+        loading: state.loading,
         iniciarSesion,
         usuarioAutenticado,
         cerrarSesion,
