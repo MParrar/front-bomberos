@@ -12,6 +12,7 @@ import RutaPrivada from './components/rutas/RutaPrivada';
 import Estadisticas from './Pages/Estadisticas';
 import { Citaciones } from './Pages/Citaciones';
 import CuartelState from './context/cuarteles/cuartelState';
+import Maquina from './Pages/Maquina';
 
 const token = localStorage.getItem('token');
 
@@ -66,8 +67,17 @@ function App() {
                 </RutaPrivada>
               }
             />
+            <Route
+              exact
+              path="/maquinas"
+              element={
+                <RutaPrivada>
+                  <Layout />
+                  <Maquina />
+                </RutaPrivada>
+              }
+            />
           </Routes>
-
         </HashRouter>
       </CuartelState>
     </AuthState>
