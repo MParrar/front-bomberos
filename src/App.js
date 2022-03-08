@@ -10,6 +10,7 @@ import AuthState from './context/autenticacion/authState';
 import { tokenAuth } from './config/token';
 import RutaPrivada from './components/rutas/RutaPrivada';
 import Estadisticas from './Pages/Estadisticas';
+import Maquina from './Pages/Maquina';
 
 const token = localStorage.getItem('token');
 
@@ -50,6 +51,16 @@ function App() {
               <RutaPrivada>
                 <Layout />
                 <Estadisticas />
+              </RutaPrivada>
+            }
+          />
+          <Route
+            exact
+            path="/maquinas"
+            element={
+              <RutaPrivada>
+                <Layout />
+                <Maquina />
               </RutaPrivada>
             }
           />

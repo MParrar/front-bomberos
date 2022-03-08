@@ -27,6 +27,13 @@ export const SidebarData = [
     rol: ['Bombero', 'Administrador'],
   },
   {
+    title: 'Máquinas',
+    path: '/maquinas',
+    icon: <FaIcons.FaTruckMoving />,
+    cName: 'nav-text',
+    rol: ['Administrador'],
+  },
+  {
     title: 'Cerrar Sesion',
     path: '/',
     icon: <BiIcons.BiLogOut />,
