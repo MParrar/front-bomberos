@@ -20,19 +20,20 @@ export const Formulario = ({
   initialForm,
   errors,
   setErrors,
+  cuarteles
 }) => {
   const {
     nombres,
     apellidos,
     rut,
     cargo,
-    codigo,
     rol,
     servicio,
     activo,
     imagen,
     _id,
-    especialidad
+    especialidad,
+    cuartel
   } = usuario;
 
   const validarFormulario = (usuario) => {
@@ -50,12 +51,6 @@ export const Formulario = ({
     if (!usuario.cargo.trim()) {
       errors.cargo = 'El campo Cargo es requerido';
     }
-    if (!usuario.codigo.trim()) {
-      errors.codigo = 'El campo Codigo es requerido';
-    }
-    if (!usuario.imagen.trim()) {
-      errors.nombimagenes = 'El campo Imagen es requerido';
-    }
     return errors;
   };
 
@@ -65,6 +60,14 @@ export const Formulario = ({
   };
 
   const handleChange = ({ target: { name, value, type, checked } }) => {
+    if (name === 'cuartel') {
+      const cuartelFind = cuarteles.find(item => item._id === value)
+      setUsuario({
+        ...usuario,
+        [name]: cuartelFind,
+      });
+      return;
+    }
     if (type === 'checkbox') {
       if (checked === true) {
         setUsuario({
@@ -106,9 +109,7 @@ export const Formulario = ({
         apellidos.trim(),
         rut.trim(),
         cargo.trim(),
-        codigo.trim(),
-        imagen.trim(),
-      ].includes('')
+      ].includes('') || !cuartel
     ) {
       NotificationManager.warning(
         'Debe completar todos los campos del formulario',
@@ -126,6 +127,15 @@ export const Formulario = ({
       return;
     }
     const respuesta = await crearUsuario(usuario);
+
+    if (respuesta?.ok === false) {
+      return NotificationManager.warning(
+        respuesta.msg,
+        'Advertencia!',
+        2500
+      );
+
+    }
     setUsuarios([...usuarios, respuesta]);
     NotificationManager.success(
       'Usuario registrado correctamente',
@@ -143,9 +153,7 @@ export const Formulario = ({
         apellidos.trim(),
         rut.trim(),
         cargo.trim(),
-        codigo.trim(),
-        imagen.trim(),
-      ].includes('')
+      ].includes('') || !cuartel
     ) {
       NotificationManager.warning(
         'Debe completar todos los campos del formulario',
@@ -317,16 +325,20 @@ export const Formulario = ({
               </Col>
               <Col sm={12} md={6} xl={6}>
                 <Form.Group className="mb-3">
-                  <Form.Label htmlFor="rol">Rol</Form.Label>
-                  <Form.Check
-                    type="checkbox"
-                    label="Administrador"
-                    value={rol}
-                    checked={rol === '' || rol === 'Bombero' ? false : true}
-                    name="rol"
-                    id="rol"
+                  <Form.Label>Cuartel</Form.Label>
+                  <Form.Select
+                    aria-label="Default select example"
+                    name="cuartel"
+                    value={cuartel?._id}
                     onChange={handleChange}
-                  />
+                  >
+                    <option>-- Seleccione Cuarteles- -</option>
+                    {cuarteles?.map(cuartel => (
+                      <option key={cuartel?._id} value={cuartel?._id}>{cuartel.nombre}</option>
+
+                    ))}
+
+                  </Form.Select>
                 </Form.Group>
               </Col>
             </Row>
@@ -358,6 +370,20 @@ export const Formulario = ({
                       onChange={handleFileInputChange}
                     />
                   </div>
+                </Form.Group>
+              </Col>
+              <Col sm={12} md={6} xl={6}>
+                <Form.Group className="mb-3">
+                  <Form.Label htmlFor="rol">Rol</Form.Label>
+                  <Form.Check
+                    type="checkbox"
+                    label="Administrador"
+                    value={rol}
+                    checked={rol === '' || rol === 'Bombero' ? false : true}
+                    name="rol"
+                    id="rol"
+                    onChange={handleChange}
+                  />
                 </Form.Group>
               </Col>
             </Row>

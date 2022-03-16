@@ -16,13 +16,15 @@ export const Usuario = ({
   setShowCambiarPassword,
   eliminarUsuario,
 }) => {
-  const { nombres, apellidos, cargo, _id } = usuario;
+  const { nombres, apellidos, cargo, _id, cuartel } = usuario;
   return (
     <tr>
       <td>{index + 1}</td>
       <td>{nombres}</td>
       <td>{apellidos}</td>
       <td>{cargo}</td>
+      <td>{cuartel?.nombre}</td>
+
       <td className="text-center">
         <OverlayTrigger
           placement="bottom"

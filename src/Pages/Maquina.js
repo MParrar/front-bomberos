@@ -1,6 +1,6 @@
 import { faTruck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { NotificationManager } from 'react-notifications';
 import NotificationContainer from 'react-notifications/lib/NotificationContainer';
@@ -8,6 +8,7 @@ import Confirmacion from '../components/Confirmacion';
 import Formulario from '../components/Maquina/Formulario';
 import Tabla from '../components/Maquina/Tabla';
 import { eliminarMaquinaService, obtenerMaquinas } from '../services/Maquina';
+import CuartelContext from '../context/cuarteles/cuartelContext';
 
 const initialForm = {
   nombre: '',
@@ -21,10 +22,13 @@ const Maquina = () => {
   const [maquinas, setMaquinas] = useState([]);
   const [maquina, setMaquina] = useState(initialForm);
 
+  const cuartelContext = useContext(CuartelContext);
+  const { cuarteles, obtenerCuarteles } = cuartelContext;
+
   useEffect(() => {
     const listarInfo = async () => {
+      obtenerCuarteles();
       const respuesta = await obtenerMaquinas();
-      console.log(respuesta);
       setMaquinas(respuesta);
     };
     listarInfo();
@@ -64,12 +68,14 @@ const Maquina = () => {
         </Button>
         <NotificationContainer />
         <Tabla
+          cuarteles={cuarteles}
           maquinas={maquinas}
           setMaquina={setMaquina}
           setShow={setShow}
           eliminarMaquina={eliminarMaquina}
         />
         <Formulario
+          cuarteles={cuarteles}
           setShow={setShow}
           show={show}
           setMaquinas={setMaquinas}

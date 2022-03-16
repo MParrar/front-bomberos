@@ -30,7 +30,7 @@ export const Citaciones = () => {
     const [idConfirm, setIdConfirm] = useState(null);
 
     const cuartelContext = useContext(CuartelContext);
-    const { obtenerCuarteles, cuarteles } = cuartelContext;
+    const { cuarteles, obtenerCuarteles } = cuartelContext;
 
     useEffect(() => {
         setLoading(true);

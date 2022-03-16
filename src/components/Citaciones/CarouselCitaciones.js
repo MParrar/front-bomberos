@@ -12,23 +12,22 @@ function SampleNextArrow(props) {
         />
     );
 }
-
-export const CarouselCitaciones = () => {
+export const CarouselCitaciones = ({ idCuartel }) => {
 
     const [citaciones, setCitaciones] = useState([]);
-
     useEffect(() => {
         const listaCitaciones = async () => {
             const respuesta = await obtenerCitaciones();
-            setCitaciones(respuesta);
+            const citacionesFiltradas = respuesta.filter(cita => cita.cuartel?._id === idCuartel)
+            setCitaciones(citacionesFiltradas);
         };
         listaCitaciones();
     }, []);
 
     const renderSlides = () =>
         citaciones.map(citacion => (
-            <div>
-                <h3 className='pt-2'> {citacion.citacion}</h3>
+            <div key={citacion._id} style={{ width: '100%', margin: '0' }}>
+                <marquee className='' style={{ width: '100%', margin: '0', scrolDelay: '400' }}> {citacion.citacion}</marquee>
             </div>
         ));
     const settings = {
@@ -41,7 +40,7 @@ export const CarouselCitaciones = () => {
         prevArrow: <SampleNextArrow />
     };
     return (
-        <div className="container">
+        <div style={{ width: '100%', margin: '0' }}>
             {
                 <Slider
 

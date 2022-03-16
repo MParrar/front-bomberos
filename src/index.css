@@ -161,3 +161,22 @@ h2 {
 .codigo {
   font-size: 1rem;
 }
+
+.logo-fondo {
+  background-image: url("./img/logo.png");
+  background-repeat: no-repeat;
+  background-position: 50%;
+  background-size: contain;
+  height: 100%;
+  width: 100%;
+}
+
+.cabecera {
+  color: #fff;
+  height: 200px;
+  line-height: 200px;
+  text-align: center;
+  vertical-align: middle;
+  text-shadow: #111 0px 0px 10px;
+  opacity: 0.5;
+}

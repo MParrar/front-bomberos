@@ -2,7 +2,7 @@ import { Col, Row } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
 import Maquina from './Maquina';
 
-const Tabla = ({ maquinas, setMaquina, setShow, eliminarMaquina }) => {
+const Tabla = ({ maquinas, setMaquina, setShow, eliminarMaquina, cuarteles }) => {
   return (
     <Row className="tablaUsuario">
       <Col
@@ -19,6 +19,8 @@ const Tabla = ({ maquinas, setMaquina, setShow, eliminarMaquina }) => {
               <th>#</th>
               <th>Nombre</th>
               <th>Estado</th>
+              <th>Cuartel</th>
+              <th>Accion</th>
             </tr>
           </thead>
           <tbody>
@@ -31,6 +33,7 @@ const Tabla = ({ maquinas, setMaquina, setShow, eliminarMaquina }) => {
                   setMaquina={setMaquina}
                   setShow={setShow}
                   eliminarMaquina={eliminarMaquina}
+                  cuarteles={cuarteles}
                 />
               ))
             ) : (

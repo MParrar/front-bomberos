@@ -7,6 +7,7 @@ export const Tabla = ({
     setCitacion,
     setShow,
     eliminarCitacion,
+    cuarteles
 }) => {
     return (
         <Row >
@@ -23,6 +24,7 @@ export const Tabla = ({
                         <tr>
                             <th>#</th>
                             <th>Nombre</th>
+                            <th>Cuartel</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>

@@ -16,11 +16,11 @@ const Formulario = ({
   setMaquina,
   setShow,
   setMaquinas,
+  cuarteles
 }) => {
-  const { _id, nombre, estado } = maquina;
+  const { _id, nombre, estado, cuartel } = maquina;
 
   const handleChange = ({ target: { name, value, type } }) => {
-    console.log(value);
     if (type === 'number') value = Number(value);
     if (type === 'select-one') value = value === 'true' ? true : false;
     if (type)
@@ -30,9 +30,19 @@ const Formulario = ({
       });
   };
 
+  const handleChangeCuartel = ({ target: { name, value, type } }) => {
+    setMaquina({
+      ...maquina,
+      [name]: value,
+    });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if ([nombre.trim(), estado].includes('')) {
+    if ([nombre.trim(),
+      estado].includes(''),
+      cuartel?._id.trim()
+    ) {
       NotificationManager.warning(
         'Debe completar todos los campos del formulario',
         'Advertencia!',
@@ -52,7 +62,10 @@ const Formulario = ({
   };
 
   const handleEdit = async () => {
-    if ([nombre.trim(), estado].includes('')) {
+    if ([nombre.trim(),
+      estado].includes(''),
+      cuartel?._id.trim()
+    ) {
       NotificationManager.warning(
         'Debe completar todos los campos del formulario',
         'Advertencia!',
@@ -67,7 +80,6 @@ const Formulario = ({
     const listaMaquinas = maquinas.map((mm) =>
       mm._id === maquina._id ? maquina : mm
     );
-    console.log(maquina);
     setMaquinas(listaMaquinas);
     setMaquina(initialForm);
     setShow(false);
@@ -123,6 +135,27 @@ const Formulario = ({
                     </option>
                   ))}
                 </Form.Control>
+              </Form.Group>
+            </Col>
+          </Row>
+          <Row>
+            <Col sm={12} md={12} xl={12}>
+              <Form.Group className="mb-3">
+                <Form.Label>Cuartel</Form.Label>
+                <Form.Select
+                  aria-label="Default select example"
+                  name="cuartel"
+                  value={cuartel?._id}
+                  onChange={handleChangeCuartel}
+                  required
+                >
+                  <option>-- Seleccione Cuarteles- -</option>
+                  {cuarteles?.map(cuartel => (
+                    <option key={cuartel._id} value={cuartel._id}>{cuartel.nombre}</option>
+
+                  ))}
+
+                </Form.Select>
               </Form.Group>
             </Col>
           </Row>

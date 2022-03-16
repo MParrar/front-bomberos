@@ -42,6 +42,14 @@ export const Formulario = ({
     };
 
     const handleChange = ({ target: { name, value, type, checked } }) => {
+        if (name === 'cuartel') {
+            const cuartelFind = cuarteles.find(item => item._id === value)
+            setCitacion({
+                ...citacion,
+                [name]: cuartelFind,
+            });
+            return;
+        }
         setCitacion({
             ...citacion,
             [name]: value,
@@ -53,7 +61,8 @@ export const Formulario = ({
         // ValdiarsH!
         if (
             [
-                citacion.citacion.trim(), ,
+                citacion.citacion.trim(),
+                cuartel?._id.trim()
             ].includes('')
         ) {
             NotificationManager.warning(
@@ -79,6 +88,7 @@ export const Formulario = ({
         if (
             [
                 citacion.citacion.trim(),
+                cuartel?._id.trim()
             ].includes('')
         ) {
             NotificationManager.warning(
@@ -110,7 +120,7 @@ export const Formulario = ({
                     setShow(!show);
                     setCitacion(initialForm);
                 }}
-                size="xl"
+                size="md"
             >
                 <Modal.Header closeButton>
                     <Modal.Title>
@@ -120,7 +130,7 @@ export const Formulario = ({
                 <Modal.Body>
                     <Form>
                         <Row>
-                            <Col sm={12} md={6} xl={6}>
+                            <Col sm={12} md={12} xl={12}>
                                 <Form.Group className="mb-3">
                                     <Form.Label htmlFor="citacion">Citación</Form.Label>
                                     <Form.Control
@@ -134,14 +144,17 @@ export const Formulario = ({
                                     />
                                 </Form.Group>
                             </Col>
-                            <Col sm={12} md={6} xl={6}>
+                        </Row>
+                        <Row>
+                            <Col sm={12} md={12} xl={12}>
                                 <Form.Group className="mb-3">
                                     <Form.Label>Cuartel</Form.Label>
                                     <Form.Select
                                         aria-label="Default select example"
                                         name="cuartel"
-                                        value={cuartel}
+                                        value={cuartel?._id}
                                         onChange={handleChange}
+                                        required
                                     >
                                         <option>-- Seleccione Cuarteles- -</option>
                                         {cuarteles?.map(cuartel => (

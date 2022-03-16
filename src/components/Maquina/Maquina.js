@@ -4,13 +4,13 @@ import React from 'react';
 import { Button, OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 const Maquina = ({ maquina, index, setMaquina, setShow, eliminarMaquina }) => {
-  console.log(maquina);
-  const { _id, nombre, estado } = maquina;
+  const { _id, nombre, estado, cuartel } = maquina;
   return (
     <tr>
       <td>{index + 1}</td>
       <td>{nombre}</td>
       <td>{estado ? 'En servicio' : 'Fuera de servicio'}</td>
+      <td>{cuartel.nombre}</td>
       <td className="text-center">
         <OverlayTrigger
           placement="bottom"

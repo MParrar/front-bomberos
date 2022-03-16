@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import Button from 'react-bootstrap/Button';
@@ -12,17 +12,19 @@ import {
 import { eliminarUsuarioService, obtenerUsuarios } from '../services/Usuario';
 import Confirmacion from '../components/Confirmacion';
 import { Spinner } from '../components/Spinner';
+import CuartelContext from '../context/cuarteles/cuartelContext';
 
 const initialForm = {
   nombres: '',
   apellidos: '',
   rut: '',
   cargo: '',
-  codigo: '',
   password: '',
   rol: '',
   confirmPassword: '',
   imagen: '',
+  cuartel: '',
+  especialidad: ''
 };
 
 export const Usuario = () => {
@@ -35,9 +37,13 @@ export const Usuario = () => {
   const [idConfirm, setIdConfirm] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  const cuartelContext = useContext(CuartelContext);
+  const { cuarteles, obtenerCuarteles } = cuartelContext;
+
   useEffect(() => {
     setLoading(true);
     const listarUsuarios = async () => {
+      obtenerCuarteles()
       const respuesta = await obtenerUsuarios();
       setUsuarios(respuesta);
       setLoading(false);
@@ -88,6 +94,7 @@ export const Usuario = () => {
             handleConfirm={handleConfirm}
           />
           <Formulario
+            cuarteles={cuarteles}
             setShow={setShow}
             show={show}
             setUsuarios={setUsuarios}

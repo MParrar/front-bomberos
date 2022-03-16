@@ -27,6 +27,7 @@ export const Tabla = ({
               <th>Nombre</th>
               <th>Apellidos</th>
               <th>Cargo</th>
+              <th>Cuartel</th>
               <th>Acciones</th>
             </tr>
           </thead>

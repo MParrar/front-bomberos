@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import styled from 'styled-components';
 import { CarouselCitaciones } from './Citaciones/CarouselCitaciones';
+import CuartelContext from '../context/cuarteles/cuartelContext';
 
 const Title = styled.h1`
   font-size: 1.5rem;
@@ -18,12 +19,21 @@ const Wrapper = styled.section`
   z-index:9999 ;
 
 `;
-export const Footer = () => {
+export const Footer = ({ idCuartel }) => {
+
+  const cuartelContext = useContext(CuartelContext);
+  const { obtenerCuarteles, cuarteles } = cuartelContext;
+  useEffect(() => {
+    obtenerCuarteles()
+  }, []);
 
   return (
     <Wrapper>
       <Title>
-        <CarouselCitaciones />
+        <CarouselCitaciones
+          cuarteles={cuarteles}
+          idCuartel={idCuartel}
+        />
       </Title>
     </Wrapper>
   )

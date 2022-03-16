@@ -11,15 +11,14 @@ export const Citacion = ({ citacion,
     index,
     setCitacion,
     setShow,
-    setShowCambiarPassword,
     eliminarCitacion, }) => {
 
-    const { _id } = citacion;
-
+    const { _id, cuartel } = citacion;
     return (
         <tr>
             <td>{index + 1}</td>
             <td>{citacion.citacion}</td>
+            <td>{cuartel?.nombre}</td>
             <td className="text-center">
                 <OverlayTrigger
                     placement="bottom"

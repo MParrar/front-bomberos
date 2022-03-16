@@ -5,13 +5,14 @@ export const crearUsuario = async (usuario) => {
     const { data } = await clienteAxios.post('/usuario', usuario);
     return data;
   } catch (error) {
-    console.log(error);
+    console.log(error.response);
   }
 };
 
 export const obtenerUsuarios = async () => {
   try {
     const { data } = await clienteAxios.get('/usuario');
+    console.log(data)
     return data;
   } catch (error) {
     console.log(error);
@@ -60,17 +61,22 @@ export const obtenerBomberosEnServicio = async () => {
 export const obtenerBomberosActivos = async () => {
   try {
     const { data } = await clienteAxios.get('/usuario/activos');
+    console.log(data)
     return data;
   } catch (error) {
     console.log(error);
   }
 };
 
-export const bomberoServicio = async (id, servicio) => {
+export const bomberoServicio = async (id, servicio, idCuartel) => {
+  console.log(idCuartel)
   try {
     const { data } = await clienteAxios.put(
       `/usuario/servicio/${id}`,
-      servicio
+      {
+        servicio,
+        idCuartel
+      }
     );
     return data;
   } catch (error) {
@@ -104,3 +110,12 @@ export const obtenerMisLogs = async (id) => {
     console.log(error);
   }
 };
+
+export const conducirMaquina = async (id, idMaquina) => {
+  try {
+    const { data } = await clienteAxios.post(`/usuario/maquina-conducir/${id}`, { idMaquina });
+    console.log(data);
+  } catch (error) {
+    console.log(error)
+  }
+}
