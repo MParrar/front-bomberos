@@ -119,3 +119,13 @@ export const conducirMaquina = async (id, idMaquina) => {
     console.log(error)
   }
 }
+
+export const obtenerEstadisticaUsuario = async (id) => {
+  try {
+    const { data } = await clienteAxios.get(`/usuario/estadistica/${id}`);
+    console.log(data);
+    return data;
+  } catch (error) {
+    console.log(error)
+  }
+}

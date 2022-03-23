@@ -5,6 +5,8 @@ import { Card, Col, Container, Form, Row } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { Spinner } from '../../components/Spinner';
 import { obtenerMaquinas } from '../../services/Maquina';
+import fotogenerica from '../../img/fotoperfilgenerico.png'
+
 
 export const SwitchBombero = ({
   bombero,
@@ -26,16 +28,6 @@ export const SwitchBombero = ({
     listarInfo();
   }, []);
 
-  const handleChangeCheck = (maquinaCheck) => {
-    let existe = maquinasAManejar?.find(item => item?._id === maquinaCheck._id);
-    if (existe) {
-      console.log('Eliminar:', maquinasAManejar.filter(item => item._id !== maquinaCheck._id))
-      maquinasAManejar = (maquinasAManejar.filter(item => item._id !== maquinaCheck._id))
-      return;
-    }
-    console.log('Agregar')
-    maquinasAManejar([...maquinasAManejar, maquinaCheck])
-  }
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -73,7 +65,8 @@ export const SwitchBombero = ({
                 style={{ float: 'right' }}
               />
             </Card.Header>
-            <Card.Img variant="top" src={imagen} height={200} />
+            <Card.Img variant="top" src={imagen ? imagen : fotogenerica}
+              height={200} />
             <Card.Body className="cuerpo-card">
               <p className="text-center nombre">{`${nombres} ${apellidos}`}</p>
               <p className="text-center cargo">{cargo}</p>

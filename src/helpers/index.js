@@ -1,3 +1,5 @@
+import { Workbook } from "react-excel-workbook";
+
 export const formatRut2 = (rut) => {
     // XX.XXX.XXX-X
     const newRut = rut.replace(/\./g, '').replace(/\-/g, '').trim().toLowerCase();
@@ -53,4 +55,17 @@ export const formatRut = (rut) => {
         rut = (div1 + "." + div2 + "." + div3 + "-" + div4);
     }
     return rut;
+}
+
+export const descargarExcel = (data, nombres) => {
+    console.log(nombres, 'SE EJECUTa')
+    return (
+        <Workbook filename={`${nombres}.xlsx`} element={<button button className="btn btn-lg btn-success" > Descargar</button >}>
+            <Workbook.Sheet data={data} name="Sheet A">
+                <Workbook.Column label="Desde" value="createdAt" />
+                <Workbook.Column label="Hasta" value="updatedAt" />
+                <Workbook.Column label="Total" value="total" />
+            </Workbook.Sheet>
+        </Workbook >
+    )
 }
