@@ -2,7 +2,7 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-notifications/lib/notifications.css';
 import { Layout } from './components/Layout';
-import { HashRouter, Route, Routes } from 'react-router-dom';
+import { HashRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { Usuario } from './Pages/Usuario';
 import { Inicio } from './Pages/Inicio';
 import { Login } from './Pages/Login';

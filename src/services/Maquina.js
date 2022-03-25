@@ -18,6 +18,15 @@ export const obtenerMaquinas = async () => {
   }
 };
 
+export const obtenerMaquinasEnServicio = async () => {
+  try {
+    const { data } = await clienteAxios.get('/maquina/servicio');
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const editarMaquina = async (maquina) => {
   try {
     const { data } = await clienteAxios.put(`/maquina/${maquina._id}`, maquina);

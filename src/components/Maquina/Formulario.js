@@ -16,7 +16,7 @@ const Formulario = ({
   setMaquina,
   setShow,
   setMaquinas,
-  cuarteles
+  cuarteles,
 }) => {
   const { _id, nombre, estado, cuartel } = maquina;
 
@@ -31,6 +31,14 @@ const Formulario = ({
   };
 
   const handleChangeCuartel = ({ target: { name, value, type } }) => {
+    if (name === 'cuartel') {
+      const cuartelFind = cuarteles.find((item) => item._id === value);
+      setMaquina({
+        ...maquina,
+        [name]: cuartelFind,
+      });
+      return;
+    }
     setMaquina({
       ...maquina,
       [name]: value,
@@ -39,10 +47,7 @@ const Formulario = ({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if ([nombre.trim(),
-      estado].includes(''),
-      cuartel?._id.trim()
-    ) {
+    if ([nombre.trim(), estado].includes('')) {
       NotificationManager.warning(
         'Debe completar todos los campos del formulario',
         'Advertencia!',
@@ -62,10 +67,7 @@ const Formulario = ({
   };
 
   const handleEdit = async () => {
-    if ([nombre.trim(),
-      estado].includes(''),
-      cuartel?._id.trim()
-    ) {
+    if ([nombre.trim(), estado].includes('')) {
       NotificationManager.warning(
         'Debe completar todos los campos del formulario',
         'Advertencia!',
@@ -150,11 +152,11 @@ const Formulario = ({
                   required
                 >
                   <option>-- Seleccione Cuarteles- -</option>
-                  {cuarteles?.map(cuartel => (
-                    <option key={cuartel._id} value={cuartel._id}>{cuartel.nombre}</option>
-
+                  {cuarteles?.map((cuartel) => (
+                    <option key={cuartel._id} value={cuartel._id}>
+                      {cuartel.nombre}
+                    </option>
                   ))}
-
                 </Form.Select>
               </Form.Group>
             </Col>

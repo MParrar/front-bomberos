@@ -10,7 +10,7 @@ const Maquina = ({ maquina, index, setMaquina, setShow, eliminarMaquina }) => {
       <td>{index + 1}</td>
       <td>{nombre}</td>
       <td>{estado ? 'En servicio' : 'Fuera de servicio'}</td>
-      <td>{cuartel.nombre}</td>
+      <td>{cuartel?.nombre}</td>
       <td className="text-center">
         <OverlayTrigger
           placement="bottom"

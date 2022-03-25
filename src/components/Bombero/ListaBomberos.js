@@ -22,6 +22,7 @@ export const ListaBomberos = () => {
   const [bombero, setBombero] = useState({});
   const [browser, setBrowser] = useState('');
   const [loading, setLoading] = useState(false);
+  const [switchTab, setSwitchTab] = useState(false);
 
   const authContext = useContext(AuthContext);
   const { usuario } = authContext;
@@ -69,32 +70,42 @@ export const ListaBomberos = () => {
     }
   };
 
-  const handleChange = async ({ target: { value } }, idCuartel, maquinaCheck) => {
+  const handleChange = async (
+    { target: { value } },
+    idCuartel,
+    maquinaCheck
+  ) => {
     if (maquinaCheck) {
-      setLoading(true)
+      setLoading(true);
       conducirMaquina(bombero._id, maquinaCheck._id);
-      console.log(maquinasAManejar, maquinaCheck)
-      let existe = maquinasAManejar?.find(item => item?._id === maquinaCheck?._id);
-      console.log(existe)
+      let existe = maquinasAManejar?.find(
+        (item) => item?._id === maquinaCheck?._id
+      );
       if (existe) {
-        console.log('Eliminar:', maquinasAManejar.filter(item => item._id !== maquinaCheck._id))
-        maquinasAManejar = (maquinasAManejar.filter(item => item._id !== maquinaCheck._id))
-        setBombero({ ...bombero, maquinasAManejar })
-        setLoading(false)
+        maquinasAManejar = maquinasAManejar.filter(
+          (item) => item._id !== maquinaCheck._id
+        );
+        setBombero({ ...bombero, maquinasAManejar });
+        setLoading(false);
         return;
       }
-      console.log('Agregar')
-      maquinasAManejar = ([...maquinasAManejar, maquinaCheck])
-      setBombero({ ...bombero, maquinasAManejar })
-      setLoading(false)
+      maquinasAManejar = [...maquinasAManejar, maquinaCheck];
+      setBombero({ ...bombero, maquinasAManejar });
+      setLoading(false);
       return;
     }
     setLoading(true);
     value = value === 'on' && !bombero.servicio;
-    setBombero({ ...bombero, servicio: value });
-    const respuesta = await bomberoServicio(bombero._id, { servicio: value }, idCuartel);
+    const cuartelS = cuarteles.find((x) => x._id === idCuartel);
+    setBombero({ ...bombero, servicio: value, cuartelServicio: cuartelS });
+    const respuesta = await bomberoServicio(
+      bombero._id,
+      { servicio: value },
+      idCuartel
+    );
     setBusqueda(false);
     setBrowser('');
+    setSwitchTab(false);
     setLoading(false);
   };
 
@@ -102,32 +113,40 @@ export const ListaBomberos = () => {
     <Spinner />
   ) : (
     <>
-      <Tabs style={{ marginLeft: '8%', fontSize: '1.1rem', color: 'red' }} defaultActiveKey={`${cuarteles.find(item => item._id === usuario?.usuario?.cuartel)?.nombre}`} id="uncontrolled-tab-example" className="mb-3">
-        {
-          cuarteles.map(tab => (
-            <Tab key={tab._id} eventKey={tab.nombre} title={<span style={{ color: 'black' }}>{tab.nombre}</span>}>
-              <Cuartel
-                setBusqueda={setBusqueda}
-                setBrowser={setBrowser}
-                bomberos={bomberos}
-                setBombero={setBombero}
-                usuario={usuario}
-                handleBusqueda={handleBusqueda}
-                browser={browser}
-                busqueda={busqueda}
-                handleChange={handleChange}
-                bombero={bombero}
-                idCuartel={tab._id}
-                nombreCuartel={tab.nombre}
-              />
-            </Tab>
-          ))
-        }
+      <Tabs
+        style={{ marginLeft: '8%', fontSize: '1.1rem', color: 'red' }}
+        defaultActiveKey={`${
+          cuarteles.find((item) => item._id === usuario?.usuario?.cuartel)
+            ?.nombre
+        }`}
+        id="uncontrolled-tab-example"
+        className="mb-3"
+      >
+        {cuarteles.map((tab) => (
+          <Tab
+            key={tab._id}
+            eventKey={tab.nombre}
+            title={<span style={{ color: 'black' }}>{tab.nombre}</span>}
+            disabled={switchTab}
+          >
+            <Cuartel
+              setBusqueda={setBusqueda}
+              setBrowser={setBrowser}
+              bomberos={bomberos}
+              setBombero={setBombero}
+              usuario={usuario}
+              handleBusqueda={handleBusqueda}
+              browser={browser}
+              busqueda={busqueda}
+              handleChange={handleChange}
+              bombero={bombero}
+              idCuartel={tab._id}
+              nombreCuartel={tab.nombre}
+              setSwitchTab={setSwitchTab}
+            />
+          </Tab>
+        ))}
       </Tabs>
-
-
-
-
     </>
   );
 };
