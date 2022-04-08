@@ -142,32 +142,34 @@ export const Tabla = ({
               )}
             </tbody>
           </Table>
-          <Pagination>
-            {activePage > 0 && (
-              <>
-                <Pagination.First onClick={handleFirstPage} />
-                <Pagination.Prev onClick={handlePrevPage} />
-              </>
-            )}
+          {pages?.length > 1 && (
+            <Pagination>
+              {activePage > 0 && (
+                <>
+                  <Pagination.First onClick={handleFirstPage} />
+                  <Pagination.Prev onClick={handlePrevPage} />
+                </>
+              )}
 
-            {pages &&
-              pages?.map((page, index) => (
-                <Pagination.Item
-                  key={index}
-                  active={index === activePage && true}
-                  onClick={() => handlePagination(index)}
-                >
-                  {index + 1}
-                </Pagination.Item>
-              ))}
+              {pages &&
+                pages?.map((page, index) => (
+                  <Pagination.Item
+                    key={index}
+                    active={index === activePage && true}
+                    onClick={() => handlePagination(index)}
+                  >
+                    {index + 1}
+                  </Pagination.Item>
+                ))}
 
-            {activePage < pages?.length - 1 && (
-              <>
-                <Pagination.Next onClick={handleNextPage} />
-                <Pagination.Last onClick={handleLastPage} />
-              </>
-            )}
-          </Pagination>
+              {activePage < pages?.length - 1 && (
+                <>
+                  <Pagination.Next onClick={handleNextPage} />
+                  <Pagination.Last onClick={handleLastPage} />
+                </>
+              )}
+            </Pagination>
+          )}
         </Col>
       </Row>
     </>
