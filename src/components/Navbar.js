@@ -4,7 +4,7 @@ import * as FaIcons from 'react-icons/fa';
 import * as AiIcons from 'react-icons/ai';
 import { SidebarData } from './SidebarData';
 import { IconContext } from 'react-icons';
-import logo from '../img/logo.png'
+import logo from '../img/logo.png';
 import './Navbar.css';
 import AuthContext from '../context/autenticacion/authContext';
 import { Button, ButtonGroup, Dropdown, DropdownButton } from 'react-bootstrap';
@@ -41,31 +41,38 @@ export const Navbar = () => {
           <Link to="#" className="menu-bars">
             <FaIcons.FaBars onClick={showSidebar} />
           </Link>
-          <h4 className="title-bars mt-1">CUERPOS DE BOMBEROS DE PINTO <p style={{ fontSize: '1.8rem' }} className='text-center'>Fuerza y Unidad</p></h4>
-          {usuario?.usuario?.nombres ?
+          <h4 className="title-bars mt-1">
+            CUERPOS DE BOMBEROS DE PINTO{' '}
+            <p style={{ fontSize: '1.8rem' }} className="text-center">
+              Fuerza y Unidad
+            </p>
+          </h4>
+          {usuario?.usuario?.nombres ? (
             <DropdownButton
               as={ButtonGroup}
               variant="secondary"
               className="sesion-bars"
               title={
                 usuario
-                  ? `${usuario.usuario.nombres.split(' ')[0]}  ${usuario.usuario.apellidos.split(' ')[0]}`
+                  ? `${usuario.usuario.nombres.split(' ')[0]}  ${
+                      usuario.usuario.apellidos.split(' ')[0]
+                    }`
                   : ''
               }
               id="bg-nested-dropdown"
             >
-              <Dropdown.Item eventKey="1" onClick={() => cerrarSesionComponent()}>
+              <Dropdown.Item
+                eventKey="1"
+                onClick={() => cerrarSesionComponent()}
+              >
                 Cerrar Sesión
               </Dropdown.Item>
             </DropdownButton>
-            :
-            <Button
-              variant="secondary"
-              className="button-bars"
-            >
+          ) : (
+            <Button variant="secondary" className="button-bars">
               Cargando...
             </Button>
-          }
+          )}
         </div>
         <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
           <ul className="nav-menu-items" onClick={showSidebar}>
@@ -78,14 +85,16 @@ export const Navbar = () => {
               if (item.rol.includes(usuario?.usuario.rol)) {
                 return (
                   <li key={index} className={item.cName}>
-                    <Link to={item.path} onClick={item.path === '/' && (cerrarSesion)}>
+                    <Link
+                      to={item.path}
+                      onClick={item.path === '/' && cerrarSesion}
+                    >
                       {item.icon}
                       <span>{item.title}</span>
                     </Link>
                   </li>
-                )
+                );
               }
-              ;
             })}
           </ul>
         </nav>
