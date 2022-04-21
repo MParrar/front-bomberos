@@ -25,7 +25,7 @@ export const ListaBomberos = () => {
   const [switchTab, setSwitchTab] = useState(false);
 
   const authContext = useContext(AuthContext);
-  const { usuario } = authContext;
+  const { usuario, cuartel } = authContext;
 
   const cuartelContext = useContext(CuartelContext);
   const { obtenerCuarteles, cuarteles } = cuartelContext;
@@ -115,10 +115,9 @@ export const ListaBomberos = () => {
     <>
       <Tabs
         style={{ marginLeft: '8%', fontSize: '1.1rem', color: 'red' }}
-        defaultActiveKey={`${
-          cuarteles.find((item) => item._id === usuario?.usuario?.cuartel)
-            ?.nombre
-        }`}
+        defaultActiveKey={`${cuarteles.find((item) => cuartel ? item._id === cuartel : item._id === usuario?.usuario?.cuartel)
+          ?.nombre
+          }`}
         id="uncontrolled-tab-example"
         className="mb-3"
       >

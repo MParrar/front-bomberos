@@ -1,4 +1,5 @@
 import {
+  AGREGAR_CUARTEL,
   CERRAR_SESION,
   COMENZAR_INICIO_SESION,
   LOGIN_ERROR,
@@ -30,9 +31,16 @@ export const AuthReducer = (state, action) => {
         loading: false,
 
       };
+    case AGREGAR_CUARTEL:
+      localStorage.setItem('cuartel', action.payload);
+      return {
+        ...state,
+        cuartel: action.payload
+      }
     case CERRAR_SESION:
     case LOGIN_ERROR:
       localStorage.removeItem('token');
+      localStorage.removeItem('cuartel');
       return {
         ...state,
         mensaje: action.payload,
@@ -41,6 +49,7 @@ export const AuthReducer = (state, action) => {
         token: null,
         autenticado: false,
         loading: false,
+        cuartel: null
 
       };
     default:

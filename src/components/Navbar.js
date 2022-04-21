@@ -8,11 +8,12 @@ import logo from '../img/logo.png'
 import './Navbar.css';
 import AuthContext from '../context/autenticacion/authContext';
 import { Button, ButtonGroup, Dropdown, DropdownButton } from 'react-bootstrap';
+import CuartelContext from '../context/cuarteles/cuartelContext';
 
 export const Navbar = () => {
   const [sidebar, setSidebar] = useState(false);
   const authContext = useContext(AuthContext);
-  const { usuarioAutenticado, usuario, cargando, cerrarSesion } = authContext;
+  const { usuarioAutenticado, usuario, cargando, cerrarSesion, cuartel } = authContext;
 
   const navigate = useNavigate();
 
@@ -48,9 +49,12 @@ export const Navbar = () => {
               variant="secondary"
               className="sesion-bars"
               title={
-                usuario
-                  ? `${usuario.usuario.nombres.split(' ')[0]}  ${usuario.usuario.apellidos.split(' ')[0]}`
-                  : ''
+                cuartel ?
+                  'Cuartel'
+                  :
+                  usuario
+                    ? `${usuario.usuario.nombres.split(' ')[0]}  ${usuario.usuario.apellidos.split(' ')[0]}`
+                    : ''
               }
               id="bg-nested-dropdown"
             >

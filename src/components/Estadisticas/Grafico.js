@@ -17,7 +17,7 @@ import {
   Filler,
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
-import { Col, Container, Form, Row } from 'react-bootstrap';
+import { Col, Container, Form, Row, Button } from 'react-bootstrap';
 import { Spinner } from '../Spinner';
 import AuthContext from '../../context/autenticacion/authContext';
 import { descargarExcel } from '../../helpers';
@@ -61,7 +61,8 @@ const options = {
 const Grafico = () => {
   const authContext = useContext(AuthContext);
   const { autenticado, usuario, token } = authContext;
-
+  const [fechaInicio, setFechaInicio] = useState('');
+  const [fechaFin, setFechaFin] = useState('');
   const [usuarios, setUsuarios] = useState([]);
   const [usuarioSeleccionado, setUsuarioSeleccionado] = useState({});
   const [tiempos, setTiempos] = useState(initialTimes);
@@ -110,7 +111,30 @@ const Grafico = () => {
     labels,
   };
 
+  const handleChangeFecha = ({ target: { value, name } }) => {
+    setExcel({
+      nombre: '',
+      data: [],
+      ejecutar: false
+    })
+    if (name === 'fechaInicio') {
+      setFechaInicio(value);
+    } else {
+      setFechaFin(value);
+    }
+  }
+
+  const clear = () => {
+    setExcel({
+      nombre: '',
+      data: [],
+      ejecutar: false
+    })
+    // setFechaInicio('')
+    // setFechaFin('')
+  }
   const handleChange = ({ target: { value, name } }) => {
+    clear();
     const usuario = usuarios.filter((usuario) => usuario._id === value)[0];
     if (usuario) {
       setUsuarioSeleccionado(usuario);
@@ -121,20 +145,53 @@ const Grafico = () => {
       calcularLog(busquedaLogs);
     }
   };
+  // const handleChange = async ({ target: { value, name } }) => {
+  //   clear();
+  //   const usuario = usuarios.filter((usuario) => usuario._id === value)[0];
+  //   if (usuario) {
+  //     setUsuarioSeleccionado(usuario);
+  //     const busquedaLogs = estadisticas.filter(
+  //       (log) => log.usuario?._id === usuario?._id
+  //     );
+  //     const { _id } = usuario;
+  //     let respuesta = await obtenerEstadisticaUsuario(_id);
+  //     setExcel({
+  //       nombre: usuario.nombres,
+  //       data: respuesta.estadisticas,
+  //       ejecutar: true,
+  //     });
+  //     console.log(busquedaLogs);
+  //     calcularLog(busquedaLogs);
+  //   }
+  // };
 
-  const handleChangeBuscar = async ({ target: { value, name } }) => {
-    const usuario = usuarios.filter((usuario) => usuario._id === value)[0];
-    if (usuario) {
-      setUsuarioSeleccionado(usuario);
-      const { _id } = usuario;
-      let respuesta = await obtenerEstadisticaUsuario(_id);
-      setExcel({
-        nombre: usuario.nombres,
-        data: respuesta.estadisticas,
-        ejecutar: true,
-      });
-    }
-  };
+  const buscarDataExcel = async () => {
+    if (fechaInicio > fechaFin) return alert('OYEYAPO')
+    console.log(usuario)
+    const { _id } = usuarioSeleccionado;
+
+    let respuesta = await obtenerEstadisticaUsuario(_id, { fechaInicio, fechaFin });
+    setExcel({
+      nombre: usuarioSeleccionado.nombres,
+      data: respuesta.estadisticas,
+      ejecutar: true,
+    });
+    // clear();
+  }
+
+  // const handleChangeBuscar = async ({ target: { value, name } }) => {
+  //   const usuario = usuarios.filter((usuario) => usuario._id === value)[0];
+  //   if (usuario) {
+  //     setUsuarioSeleccionado(usuario);
+  //     const { _id } = usuario;
+  //     let respuesta = await obtenerEstadisticaUsuario(_id);
+  //     setExcel({
+  //       nombre: usuario.nombres,
+  //       data: respuesta.estadisticas,
+  //       ejecutar: true,
+  //     });
+  //   }
+  // };
 
   const calcularLog = (busquedaLogs) => {
     if (busquedaLogs.length > 0) {
@@ -183,65 +240,84 @@ const Grafico = () => {
       ) : (
         <>
           <Row>
+            <Col xs={12} sm={8} md={4} xl={3} xxl={4} className='mb-1'>
+              {usuario?.usuario.rol === 'Bombero' ? (
+                <h4 className="text-center">
+                  Información horas en servicio
+                </h4>
+              ) : (
+                <Form.Control
+                  as="select"
+                  name="usuario"
+                  value={usuarioSeleccionado._id}
+                  onChange={handleChange}
+                >
+                  <option>-- Seleccione Usuario- -</option>
+                  {usuarios &&
+                    usuarios.map((usuario) => (
+                      <option
+                        key={usuario._id}
+                        value={usuario._id}
+                      >{`${usuario.nombres} ${usuario.apellidos}`}</option>
+                    ))}
+                </Form.Control>
+              )}
+            </Col>
+
+
+            <Col xl="3" className='mb-1'>
+              <Form.Control
+                type="date"
+                name="fechaInicio"
+                value={fechaInicio}
+                onChange={handleChangeFecha}
+              />
+
+            </Col>
+            <Col xl="3" className='mb-1'>
+              <Form.Control
+                type="date"
+                name="fechaFin"
+                value={fechaFin}
+                onChange={handleChangeFecha}
+              />
+            </Col>
+
+            <Col xl="2">
+              <div className="text-center mb-1">
+                {!excel.ejecutar ?
+                  <Button
+                    onClick={() => buscarDataExcel()}
+                  // disabled={!excel.nombre}
+                  >
+                    Buscar
+                  </Button>
+                  :
+
+                  excel.ejecutar &&
+                  (excel.data.length > 0 ? (
+                    descargarExcel(excel.data, excel.nombre)
+                  ) : (
+                    <>Usuario no registra estadisticas...</>
+                  ))
+                }{' '}
+
+              </div>
+            </Col>
+
+          </Row>
+          <Row>
             <Col>
               <Row>
-                <Col xs={0} sm={2} md={4} xl={4} xxl={4}></Col>
-                <Col xs={12} sm={8} md={4} xl={4} xxl={4}>
-                  {usuario?.usuario.rol === 'Bombero' ? (
-                    <h4 className="text-center">
-                      Información horas en servicio
-                    </h4>
-                  ) : (
-                    <Form.Control
-                      as="select"
-                      name="usuario"
-                      value={usuarioSeleccionado._id}
-                      onChange={handleChange}
-                    >
-                      <option>-- Seleccione Usuario- -</option>
-                      {usuarios &&
-                        usuarios.map((usuario) => (
-                          <option
-                            key={usuario._id}
-                            value={usuario._id}
-                          >{`${usuario.nombres} ${usuario.apellidos}`}</option>
-                        ))}
-                    </Form.Control>
-                  )}
-                </Col>
+
                 <Col xs={0} sm={2} md={4} xl={4} xxl={4}></Col>
               </Row>
               <Container>
                 <Bar data={data} options={options} />
               </Container>
-            </Col>
-            <Col>
-              <Form.Control
-                as="select"
-                name="usuario"
-                className="mb-4"
-                value={usuarioSeleccionado._id}
-                onChange={handleChangeBuscar}
-              >
-                <option>-- Seleccione Usuario- -</option>
-                {usuarios &&
-                  usuarios.map((usuario) => (
-                    <option
-                      key={usuario._id}
-                      value={usuario._id}
-                    >{`${usuario.nombres} ${usuario.apellidos}`}</option>
-                  ))}
-              </Form.Control>
 
-              <div className="text-center">
-                {excel.ejecutar &&
-                  (excel.data.length > 0 ? (
-                    descargarExcel(excel.data, excel.nombre)
-                  ) : (
-                    <>Usuario no registra estadisticas...</>
-                  ))}{' '}
-              </div>
             </Col>
+
           </Row>
         </>
       )}

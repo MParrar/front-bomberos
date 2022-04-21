@@ -118,9 +118,9 @@ export const conducirMaquina = async (id, idMaquina) => {
   }
 };
 
-export const obtenerEstadisticaUsuario = async (id) => {
+export const obtenerEstadisticaUsuario = async (id, fecha) => {
   try {
-    const { data } = await clienteAxios.get(`/usuario/estadistica/${id}`);
+    const { data } = await clienteAxios.post(`/usuario/estadistica/${id}`, fecha);
     console.log(data);
     return data;
   } catch (error) {

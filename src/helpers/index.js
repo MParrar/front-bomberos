@@ -55,22 +55,26 @@ export const formatRut = (rut) => {
   return rut;
 };
 
-export const descargarExcel = (data, nombres) => {
+export const descargarExcel = (data, nombres,) => {
+  console.log(data)
   return (
+
     <Workbook
       filename={`${nombres}.xlsx`}
       element={
-        <button button className="btn btn-lg btn-success">
+        <button button className="btn btn-md btn-success">
           {' '}
           Descargar
         </button>
       }
     >
       <Workbook.Sheet data={data} name="Sheet A">
+        <Workbook.Column label="Nombre" value={data => data.usuario.nombres} />
         <Workbook.Column label="Desde" value="createdAt" />
         <Workbook.Column label="Hasta" value="updatedAt" />
-        <Workbook.Column label="Total" value="total" />
+        <Workbook.Column label="Total(Horas)" value={data => (data.total / 60).toFixed(2)} />
       </Workbook.Sheet>
     </Workbook>
   );
+
 };
