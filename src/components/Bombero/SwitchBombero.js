@@ -68,8 +68,8 @@ export const SwitchBombero = ({
                 cuartel?.nombre.toUpperCase() === 'PRIMERA'
                   ? '3px solid blue'
                   : cuartel?.nombre.toUpperCase() === 'SEGUNDA'
-                  ? '3px solid orange'
-                  : '3px solid green',
+                    ? '3px solid orange'
+                    : '3px solid green',
               width: '25rem',
             }}
           >

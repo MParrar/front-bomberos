@@ -9,6 +9,7 @@ import Formulario from '../components/Maquina/Formulario';
 import Tabla from '../components/Maquina/Tabla';
 import { eliminarMaquinaService, obtenerMaquinas } from '../services/Maquina';
 import CuartelContext from '../context/cuarteles/cuartelContext';
+import { Spinner } from '../components/Spinner';
 
 const initialForm = {
   nombre: '',
@@ -21,15 +22,17 @@ const Maquina = () => {
   const [idConfirm, setIdConfirm] = useState(null);
   const [maquinas, setMaquinas] = useState([]);
   const [maquina, setMaquina] = useState(initialForm);
-
+  const [loading, setLoading] = useState(false);
   const cuartelContext = useContext(CuartelContext);
   const { cuarteles, obtenerCuarteles } = cuartelContext;
 
   useEffect(() => {
+    setLoading(true)
     const listarInfo = async () => {
       obtenerCuarteles();
       const respuesta = await obtenerMaquinas();
       setMaquinas(respuesta);
+      setLoading(false)
     };
     listarInfo();
   }, []);
@@ -58,41 +61,44 @@ const Maquina = () => {
   };
 
   return (
-    <>
-      <h1 className="mt-3 text-center ">Lista de Máquinas</h1>
-      <div className="container">
-        <NotificationContainer />
-        <hr />
-        <Button className="mb-4" onClick={() => setShow(!show)}>
-          Agregar Máquina <FontAwesomeIcon className="ml-2" icon={faTruck} />
-        </Button>
-        <NotificationContainer />
-        <Tabla
-          cuarteles={cuarteles}
-          maquinas={maquinas}
-          setMaquina={setMaquina}
-          setShow={setShow}
-          eliminarMaquina={eliminarMaquina}
-        />
-        <Formulario
-          cuarteles={cuarteles}
-          setShow={setShow}
-          show={show}
-          setMaquinas={setMaquinas}
-          maquinas={maquinas}
-          maquina={maquina}
-          initialForm={initialForm}
-          setMaquina={setMaquina}
-        />
-        <Confirmacion
-          title={'Eliminando Máquina'}
-          mensaje={'¿Está seguro que desea eliminar ésta maquinaW?'}
-          showConfirm={showConfirm}
-          handleClose={handleClose}
-          handleConfirm={handleConfirm}
-        />
-      </div>
-    </>
+    loading ?
+      <Spinner />
+      :
+      <>
+        <h1 className="mt-3 text-center ">Lista de Máquinas</h1>
+        <div className="container">
+          <NotificationContainer />
+          <hr />
+          <Button className="mb-4" onClick={() => setShow(!show)}>
+            Agregar Máquina <FontAwesomeIcon className="ml-2" icon={faTruck} />
+          </Button>
+          <NotificationContainer />
+          <Tabla
+            cuarteles={cuarteles}
+            maquinas={maquinas}
+            setMaquina={setMaquina}
+            setShow={setShow}
+            eliminarMaquina={eliminarMaquina}
+          />
+          <Formulario
+            cuarteles={cuarteles}
+            setShow={setShow}
+            show={show}
+            setMaquinas={setMaquinas}
+            maquinas={maquinas}
+            maquina={maquina}
+            initialForm={initialForm}
+            setMaquina={setMaquina}
+          />
+          <Confirmacion
+            title={'Eliminando Máquina'}
+            mensaje={'¿Está seguro que desea eliminar ésta maquinaW?'}
+            showConfirm={showConfirm}
+            handleClose={handleClose}
+            handleConfirm={handleConfirm}
+          />
+        </div>
+      </>
   );
 };
 

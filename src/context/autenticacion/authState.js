@@ -2,6 +2,7 @@ import { useReducer } from 'react';
 import clienteAxios from '../../config/axios';
 import { tokenAuth } from '../../config/token';
 import {
+  AGREGAR_CUARTEL,
   CERRAR_SESION,
   COMENZAR_INICIO_SESION,
   LOGIN_ERROR,
@@ -18,7 +19,9 @@ const AuthState = ({ children }) => {
     usuario: null,
     mensaje: null,
     cargando: true,
-    loading: false
+    loading: false,
+    cuartel: localStorage.getItem('cuartel') || null
+
   };
 
   const [state, dispatch] = useReducer(AuthReducer, initalState);
@@ -52,6 +55,7 @@ const AuthState = ({ children }) => {
         type: LOGIN_EXITOSO,
         payload: respuesta.data,
       });
+
       usuarioAutenticado();
     } catch (error) {
       dispatch({
@@ -68,6 +72,17 @@ const AuthState = ({ children }) => {
     });
   };
 
+  const agregarCuartel = async (cuartel) => {
+    try {
+      dispatch({
+        type: AGREGAR_CUARTEL,
+        payload: cuartel
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <AuthContext.Provider
       value={{
@@ -77,9 +92,11 @@ const AuthState = ({ children }) => {
         mensaje: state.mensaje,
         cargando: state.cargando,
         loading: state.loading,
+        cuartel: state.cuartel,
         iniciarSesion,
         usuarioAutenticado,
         cerrarSesion,
+        agregarCuartel
       }}
     >
       {children}

@@ -1,13 +1,13 @@
 import { useReducer } from "react";
 import clienteAxios from "../../config/axios";
-import { OBTENER_CUARTELES } from "../../types";
+import { AGREGAR_CUARTEL, OBTENER_CUARTELES } from "../../types";
 import CuartelContext from "./cuartelContext";
 import { CuartelReducer } from "./cuartelReducer";
 
 
 const CuartelState = ({ children }) => {
     const initialState = {
-        cuarteles: []
+        cuarteles: [],
     }
 
     const [state, dispatch] = useReducer(CuartelReducer, initialState);
@@ -24,11 +24,14 @@ const CuartelState = ({ children }) => {
         }
     }
 
+
+
+
     return (
         <CuartelContext.Provider
             value={{
                 cuarteles: state.cuarteles,
-                obtenerCuarteles
+                obtenerCuarteles,
             }}
         >
             {children}
