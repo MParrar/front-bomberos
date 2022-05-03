@@ -2,7 +2,7 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-notifications/lib/notifications.css';
 import { Layout } from './components/Layout';
-import { HashRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { Usuario } from './Pages/Usuario';
 import { Inicio } from './Pages/Inicio';
 import { Login } from './Pages/Login';
@@ -24,7 +24,7 @@ function App() {
   return (
     <AuthState>
       <CuartelState>
-        <HashRouter>
+        <BrowserRouter>
           <Routes>
             <Route path="/" element={<Login />}></Route>
             <Route
@@ -78,7 +78,7 @@ function App() {
               }
             />
           </Routes>
-        </HashRouter>
+        </BrowserRouter>
       </CuartelState>
     </AuthState>
   );
